@@ -1,0 +1,4367 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Title in command line option</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <style>
+      /*==== 全体調整 ====*/
+      /* 全体の幅などを調整する */
+      body {
+          width: initial;
+          max-width: 100%;
+          max-height: 100%;
+          font-family: Verdana, Arial, Helvetica, sans-serif;
+          text-align: left;
+          background-color: #ffffff;
+      }
+      
+      /* 改ページ */
+      .breakpage {
+          break-before: page;
+      }
+      
+      p {
+          margin: 0.7em 0;
+          text-align: left;
+      }
+      
+      /*==== ヘッダ ====*/
+      h1 {
+          break-before: page;
+            margin: 0;
+          border-bottom: 2px solid;
+          break-after: avoid-page;
+      }
+      h2 {
+          font-size: 1.6em;
+          text-decoration: underline;
+          break-after: avoid-page;
+      }
+      h3 {
+          font-size: 1.5em;
+          text-decoration: underline;
+          break-after: avoid-page;
+      }
+      h4 {
+          font-size: 1.4em;
+          text-decoration: underline;
+          break-after: avoid-page;
+      }
+      h5 {
+          margin-block-end: 0em;
+          font-size: 1.2em;
+          font-weight: bold;
+          break-after: avoid-page;
+      }
+      h6 {
+          margin-block-end: 0em;
+          font-size: 0em;
+          break-after: avoid-page;
+      }
+
+      /*==== div要素による制御 ====*/
+      /* div要素によりパラグラフの位置と背景色を制御する。 */
+      div.indentedColoredBox {
+          background: #f0f0f0;
+          margin-left: 2em;
+      }
+      
+      div.indented {
+          margin-left: 2em;
+      }
+      
+      div.coloredBox {
+          background: #f0f0f0;
+      }
+
+      /*==== 図の書式 ====*/
+      figure {
+          text-align: center
+      }
+      
+      /*==== リスティングの書式 ====*/
+      /* リスティングを少し右寄せにする。 */
+      div.listing {
+          margin-left: 0em;
+          padding: 0
+      }
+      /* キャプションをリスティング部分にぴったり寄せる。 */
+      div.listing > p {
+          margin: 1em 0 0 0
+      }
+      /* リスティング部分の余分な余白をなくし、背景に色を付ける。 */
+      div.listing > pre {
+          background: #f0f0f0;
+          margin: 0
+      }
+      
+      /*==== 図の書式 ====*/
+      figure > img {
+          break-after: avoid-page;
+      }
+      img {
+          border: 1px solid #404040;
+      }
+      /*==== リスト ====*/
+      /* リスト内のイメージを少し右に寄せる。 */
+      li > img {
+          margin-left: 2em;
+      }
+
+      ul li {
+          margin-left: 2em;
+      }
+      
+      /*==== 表の書式 ====*/
+      table {
+          margin: 0.5em 0;
+          border-collapse: collapse;
+          overflow-x: auto;
+          display: block;
+  		border: 0 0;
+              break-inside: avoid-page;
+      }
+      table caption {
+        margin-bottom: 0;
+        border-bottom: thick;
+        font-weight: bold;
+        break-after: avoid-page;
+      }
+      thead tr {
+          border: 1px solid;
+      }
+      thead th {
+          border-left: 1px dotted;
+          border-right: 1px dotted;
+          border-bottom: 2px solid;
+      }
+  	thead + tbody {
+          margin-top: initial;
+          border-top: 2px solid #1a1a1a;
+          border-bottom: 1px solid #1a1a1a;
+  	}
+      thead + tbody tr {
+          border: 1px solid;
+      }
+      thead + tbody td {
+          border: 1px dotted;
+      }
+
+      /*==== リスティング ====*/
+      div.listing p {
+          break-after: avoid-page;
+      }
+      code {
+        font-size: 1em;
+        background: #f0f0f0;
+        text-align: left;
+      }
+
+      div.sourceCode { background: #f0f0f0; text-align: left; }
+      pre > code.sourceCode { font-size: 0.8em; line-height: 90%; text-align: left;}
+      pre > code.sourceCode > span { display: initial; line-height: 1em; }
+      pre > code.sourceCode > a { line-height: 1em; }
+      pre.numberSource { margin-left: initial; border-left: initial;  padding-left: iinitial; }
+      pre.numberSource code > span { position: initial; left: initial; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: initial; text-align: right; vertical-align: baseline;
+          display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding-right: 1em ; width: 3em; line-height: 1em;
+        }    /*==== 汎用 ====*/
+      
+      /*==== 印刷時 ====*/
+      @media print {
+          figure {
+              break-inside: avoid;
+          }
+          div > table {
+              break-inside: avoid-page;
+          }
+          div > table > tbody td {
+              break-inside: avoid;
+          }
+          div {
+              break-inside: avoid;
+          }
+      }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<h2 id="toc-title">目次</h2>
+<ul>
+<li><a href="#sec:前書き" id="toc-sec:前書き">前書き</a></li>
+<li><a href="#sec:TextBlockでいろいろ"
+id="toc-sec:TextBlockでいろいろ">1章 Hello Worldで遊ぶ</a>
+<ul>
+<li><a href="#sec:WPFプロジェクトを作る"
+id="toc-sec:WPFプロジェクトを作る">1.1　WPFプロジェクトを作る</a></li>
+<li><a href="#xamlだけでhellow-world"
+id="toc-xamlだけでhellow-world">1.2　Xamlだけで「Hellow
+World!」</a></li>
+<li><a href="#コードビハインドでhello-world"
+id="toc-コードビハインドでhello-world">1.3　コードビハインドで「Hello
+World!」</a></li>
+<li><a href="#mvvmでhello-world"
+id="toc-mvvmでhello-world">1.4　MVVMで「Hello World!」</a>
+<ul>
+<li><a href="#mvvmとは" id="toc-mvvmとは">1.4.1　MVVMとは</a></li>
+<li><a href="#sec:MVVMで表示する"
+id="toc-sec:MVVMで表示する">1.4.2　MVVMで表示する</a></li>
+<li><a href="#設計時にも表示する"
+id="toc-設計時にも表示する">1.4.3　設計時にも表示する</a></li>
+<li><a href="#ビューモデルをxamlで設定"
+id="toc-ビューモデルをxamlで設定">1.4.4　ビューモデルをXamlで設定</a></li>
+</ul></li>
+<li><a href="#sec:挨拶文を変えてみよう"
+id="toc-sec:挨拶文を変えてみよう">1.5　挨拶文を変えてみよう</a>
+<ul>
+<li><a href="#sec:挨拶文変更ボタンを追加"
+id="toc-sec:挨拶文変更ボタンを追加">1.5.1　挨拶文変更ボタンを追加　</a></li>
+<li><a href="#挨拶文変更コマンド"
+id="toc-挨拶文変更コマンド">1.5.2　挨拶文変更コマンド</a></li>
+</ul></li>
+<li><a href="#挨拶文を色々と変えてみよう"
+id="toc-挨拶文を色々と変えてみよう">1.6　挨拶文を色々と変えてみよう</a></li>
+<li><a href="#ボタンを制御しよう"
+id="toc-ボタンを制御しよう">1.7　ボタンを制御しよう</a>
+<ul>
+<li><a href="#sec:IsEnabledで無効にする"
+id="toc-sec:IsEnabledで無効にする">1.7.1　IsEnabled属性で無効にする</a></li>
+<li><a href="#sec:DelegateCommandで無効にする"
+id="toc-sec:DelegateCommandで無効にする">1.7.2　DelegateCommandで無効にする</a></li>
+<li><a href="#sec:ボタンを無くしてしまう"
+id="toc-sec:ボタンを無くしてしまう">1.7.3　ボタンを消してしまう</a></li>
+</ul></li>
+<li><a href="#sec:見栄えを変えよう"
+id="toc-sec:見栄えを変えよう">1.8　見栄えを変えよう</a>
+<ul>
+<li><a href="#sec:文字列の見栄え"
+id="toc-sec:文字列の見栄え">1.8.1　文字列の見栄え</a></li>
+<li><a href="#textblockの見栄え"
+id="toc-textblockの見栄え">1.8.2　TextBlockの見栄え</a></li>
+<li><a href="#文字列の周りに余白を作る"
+id="toc-文字列の周りに余白を作る">1.8.3　文字列の周りに余白を作る</a></li>
+<li><a href="#ボタンらしくする"
+id="toc-ボタンらしくする">1.8.4　ボタンらしくする</a></li>
+</ul></li>
+<li><a href="#sec:見栄えを統一しよう"
+id="toc-sec:見栄えを統一しよう">1.9　見栄えを統一しよう</a>
+<ul>
+<li><a href="#リソースで統一"
+id="toc-リソースで統一">1.9.1　リソースで統一</a></li>
+<li><a href="#スタイルで統一"
+id="toc-スタイルで統一">1.9.2　スタイルで統一</a></li>
+<li><a href="#リソースを配置する場所"
+id="toc-リソースを配置する場所">1.9.3　リソースを配置する場所</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#コンテナ要素" id="toc-コンテナ要素">2章 コンテナ要素</a>
+<ul>
+<li><a href="#grid" id="toc-grid">2.1　Grid</a></li>
+<li><a href="#stackpanel" id="toc-stackpanel">2.2　StackPanel</a></li>
+<li><a href="#scrollviewer"
+id="toc-scrollviewer">2.3　ScrollViewer</a></li>
+<li><a href="#wrappanel" id="toc-wrappanel">2.4　WrapPanel</a></li>
+<li><a href="#canvas" id="toc-canvas">2.5　Canvas</a></li>
+<li><a href="#dockpanel" id="toc-dockpanel">2.6　DockPanel</a></li>
+<li><a href="#usercontrol"
+id="toc-usercontrol">2.7　UserControl</a></li>
+<li><a href="#window" id="toc-window">2.8　Window</a></li>
+</ul></li>
+<li><a href="#その他のコンテナ要素" id="toc-その他のコンテナ要素">3章
+その他のコンテナ要素</a>
+<ul>
+<li><a href="#border" id="toc-border">3.1　Border</a></li>
+<li><a href="#groupbox" id="toc-groupbox">3.2　GroupBox</a></li>
+<li><a href="#tabcontrol" id="toc-tabcontrol">3.3　TabControl</a></li>
+<li><a href="#expander" id="toc-expander">3.4　Expander</a></li>
+<li><a href="#viewbox" id="toc-viewbox">3.5　ViewBox</a></li>
+</ul></li>
+<li><a href="#表示用要素" id="toc-表示用要素">4章 表示用要素</a>
+<ul>
+<li><a href="#sec:TextBlock"
+id="toc-sec:TextBlock">4.1　TextBlock</a></li>
+<li><a href="#textbox" id="toc-textbox">4.2　TextBox</a></li>
+<li><a href="#progressbar"
+id="toc-progressbar">4.3　ProgressBar</a></li>
+<li><a href="#label" id="toc-label">4.4　Label</a></li>
+<li><a href="#slider" id="toc-slider">4.5　Slider</a></li>
+</ul></li>
+<li><a href="#ボタン" id="toc-ボタン">5章 ボタン</a>
+<ul>
+<li><a href="#button" id="toc-button">5.1　Button</a></li>
+<li><a href="#repeatbutton"
+id="toc-repeatbutton">5.2　RepeatButton</a></li>
+<li><a href="#radiobutton"
+id="toc-radiobutton">5.3　RadioButton</a></li>
+<li><a href="#checkboxとtogglebutton"
+id="toc-checkboxとtogglebutton">5.4　CheckBoxとToggleButton</a></li>
+</ul></li>
+<li><a href="#一覧用要素" id="toc-一覧用要素">6章 一覧用要素</a>
+<ul>
+<li><a href="#listbox" id="toc-listbox">6.1　ListBox</a>
+<ul>
+<li><a href="#xamlだけでリストを表示"
+id="toc-xamlだけでリストを表示">6.1.1　Xamlだけでリストを表示</a></li>
+<li><a href="#sec:ビューモデルにあるリストを表示"
+id="toc-sec:ビューモデルにあるリストを表示">6.1.2　ビューモデルにあるリストを表示</a></li>
+<li><a href="#sec:ListBoxアイテムの追加削除"
+id="toc-sec:ListBoxアイテムの追加削除">6.1.3　アイテムの追加・削除</a></li>
+<li><a href="#アイテムの選択"
+id="toc-アイテムの選択">6.1.4　アイテムの選択</a></li>
+<li><a href="#sec:選択されたアイテムを知る"
+id="toc-sec:選択されたアイテムを知る">6.1.5　選択されたアイテムを知る</a></li>
+<li><a href="#sec:複数選択されたアイテムを知る"
+id="toc-sec:複数選択されたアイテムを知る">6.1.6　複数選択されたアイテムを知る</a></li>
+</ul></li>
+<li><a href="#datagrid" id="toc-datagrid">6.2　DataGrid</a>
+<ul>
+<li><a href="#列を定義する"
+id="toc-列を定義する">6.2.1　列を定義する</a></li>
+<li><a href="#ヘッダー文字列の位置を調整"
+id="toc-ヘッダー文字列の位置を調整">6.2.2　ヘッダー文字列の位置を調整</a></li>
+<li><a href="#セルの表示位置を調整"
+id="toc-セルの表示位置を調整">6.2.3　セルの表示位置を調整</a></li>
+<li><a href="#datagridの動作を制限する"
+id="toc-datagridの動作を制限する">6.2.4　DataGridの動作を制限する</a></li>
+<li><a href="#アイテムの追加削除"
+id="toc-アイテムの追加削除">6.2.5　アイテムの追加・削除</a></li>
+<li><a href="#アイテムの選択-1"
+id="toc-アイテムの選択-1">6.2.6　アイテムの選択</a></li>
+<li><a href="#選択されたアイテムを知る"
+id="toc-選択されたアイテムを知る">6.2.7　選択されたアイテムを知る</a></li>
+<li><a href="#複数選択されたアイテムを知る"
+id="toc-複数選択されたアイテムを知る">6.2.8　複数選択されたアイテムを知る</a></li>
+</ul></li>
+<li><a href="#treeview" id="toc-treeview">6.3　TreeView</a>
+<ul>
+<li><a href="#xamlだけで実装"
+id="toc-xamlだけで実装">6.3.1　Xamlだけで実装</a></li>
+<li><a href="#ビューモデルにある木構造データを表示する"
+id="toc-ビューモデルにある木構造データを表示する">6.3.2　ビューモデルにある木構造データを表示する</a></li>
+<li><a href="#自然なデータクラスによる実装"
+id="toc-自然なデータクラスによる実装">6.3.3　自然なデータクラスによる実装</a></li>
+<li><a href="#選択されたアイテムを知る-1"
+id="toc-選択されたアイテムを知る-1">6.3.4　選択されたアイテムを知る</a></li>
+</ul></li>
+<li><a href="#combobox" id="toc-combobox">6.4　ComboBox</a>
+<ul>
+<li><a href="#xamlだけで実装-1"
+id="toc-xamlだけで実装-1">6.4.1　Xamlだけで実装</a></li>
+<li><a href="#ビューモデルを使う"
+id="toc-ビューモデルを使う">6.4.2　ビューモデルを使う</a></li>
+<li><a href="#dogclassを使う"
+id="toc-dogclassを使う">6.4.3　DogClassを使う</a></li>
+<li><a href="#複数の情報を選択肢に表示する"
+id="toc-複数の情報を選択肢に表示する">6.4.4　複数の情報を選択肢に表示する</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#ウィンドウの要素" id="toc-ウィンドウの要素">7章
+ウィンドウの要素</a>
+<ul>
+<li><a href="#menu" id="toc-menu">7.1　Menu</a>
+<ul>
+<li><a href="#基本的なメニュー"
+id="toc-基本的なメニュー">7.1.1　基本的なメニュー</a></li>
+<li><a href="#実践的なメニュー"
+id="toc-実践的なメニュー">7.1.2　実践的なメニュー</a></li>
+</ul></li>
+<li><a href="#toolbar" id="toc-toolbar">7.2　ToolBar</a></li>
+<li><a href="#statusbar" id="toc-statusbar">7.3　StatusBar</a></li>
+</ul></li>
+<li><a href="#xaml用語集" id="toc-xaml用語集">8章 Xaml用語集</a></li>
+</ul>
+</nav>
+<h1 class="unnumbered" id="sec:前書き">前書き</h1>
+<p>　本書からサンプルコードを抜粋したものです。それぞれのコードをコピーしてお使いください。</p>
+<h1 id="sec:TextBlockでいろいろ">1章 Hello Worldで遊ぶ</h1>
+<h2 id="sec:WPFプロジェクトを作る">1.1　WPFプロジェクトを作る</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml(自動生成)</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"&gt;
+    &lt;Grid&gt;
+        
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h2 id="xamlだけでhellow-world">1.2　Xamlだけで「Hellow World!」</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="<strong>150</strong>" Width="200"&gt;
+    &lt;Grid&gt;
+        &lt;TextBlock Text="Hello World!"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h2 id="コードビハインドでhello-world">1.3　コードビハインドで「Hello
+World!」</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml.cs(自動生成されたコードビハインド)</h5>
+using System.Windows;
+
+namespace SampleCode
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+    }
+}
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Grid&gt;
+        &lt;TextBlock Name="tbMessage"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml.cs</h5>
+using System.Windows;
+
+namespace SampleCode
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            tbMessage.Text = "Hellow World!";
+        }
+    }
+}
+</code></pre>
+</div>
+<h2 id="mvvmでhello-world">1.4　MVVMで「Hello World!」</h2>
+<h3 id="mvvmとは">1.4.1　MVVMとは</h3>
+<h3 id="sec:MVVMで表示する">1.4.2　MVVMで表示する</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+namespace SampleCode
+{
+    internal class ViewModel
+    {
+        public string GreetingMessage { get; set; } = "Hellow World!";
+    }
+}
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Grid&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml.cs</h5>
+using System.Windows;
+
+namespace SampleCode
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            DataContext = new ViewModel();
+        }
+    }
+}
+</code></pre>
+</div>
+<h3 id="設計時にも表示する">1.4.3　設計時にも表示する</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Grid&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h3 id="ビューモデルをxamlで設定">1.4.4　ビューモデルをXamlで設定</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+    &lt;Grid&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml.cs(自動生成のまま)</h5>
+using System.Windows;
+
+namespace SampleCode
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+    }
+}
+</code></pre>
+</div>
+<h2 id="sec:挨拶文を変えてみよう">1.5　挨拶文を変えてみよう</h2>
+<h3 id="sec:挨拶文変更ボタンを追加">1.5.1　挨拶文変更ボタンを追加　</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"/&gt;
+        &lt;Button Content="Change message"
+                Grid.Row="1"
+                Command="{Binding ChangeMessageCommand}"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h3 id="挨拶文変更コマンド">1.5.2　挨拶文変更コマンド</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ICommandインターフェース</h5>
+public interface ICommand
+{
+    // コマンドを実行するためのメソッド
+    void Execute(object? parameter);
+
+    // コマンドが実行可能かどうかを調べるメソッド
+    bool CanExecute(object? parameter);
+
+    // コマンドの実行可能・不可能が変化したら呼び出すべきイベント
+    event EventHandler? CanExecuteChanged;
+}
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+
+namespace SampleCode
+{
+    internal class ViewModel
+    {
+        public ViewModel()
+        {
+            ChangeMessageCommand = new DelegateCommand(() => GreetingMessage = "Bye-bye world");
+        }
+        public string GreetingMessage { get; set; } = "Hellow World!";
+
+        public DelegateCommand ChangeMessageCommand { get; }
+    }
+}
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>INotifyPropertyChanged</h5>
+public interface INotifyPropertyChanged
+{
+    event PropertyChangedEventHandler? PropertyChanged;
+}</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using System.ComponentModel;
+
+namespace SampleCode
+{
+    internal class ViewModel:INotifyPropertyChanged
+    {
+        public ViewModel()
+        {
+            ChangeMessageCommand = new DelegateCommand(() => GreetingMessage = "Bye-bye world");
+        }
+        private string _greetingMessage = "Hellow World!";
+        public string GreetingMessage {
+            get =>_greetingMessage;
+            set
+            {
+                if(_greetingMessage != value)
+                {
+                    _greetingMessage = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GreetingMessage)));
+                }
+            }
+        }
+
+        public DelegateCommand ChangeMessageCommand { get; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+    }
+}
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ViewModel()
+        {
+            ChangeMessageCommand = new DelegateCommand(() => GreetingMessage = "Bye-bye world");
+        }
+
+        private string _greetingMessage = "Hellow World!";
+        public string GreetingMessage
+        {
+            get => _greetingMessage;
+            set => SetProperty(ref _greetingMessage, value); 
+        }
+
+        public DelegateCommand ChangeMessageCommand { get; }
+    }
+}
+</code></pre>
+</div>
+<div class="indentedColoredBox">
+<pre class="sourceCode"><code class="sourceCode">public string GreetingMessage { get => _greetingMessage; set => SetProperty(ref _greetingMessage, value); }
+</code></pre>
+</div>
+<h2 id="挨拶文を色々と変えてみよう">1.6　挨拶文を色々と変えてみよう</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"/&gt;
+        &lt;Button Content="Change message"
+                Grid.Row="1"
+                Command="{Binding ChangeMessageCommand}"
+                CommandParameter="{Binding NewMessage1}"/&gt;
+        &lt;Button Content="Change message"
+                Grid.Row="2"
+                Command="{Binding ChangeMessageCommand}"
+                CommandParameter="{Binding NewMessage2}"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ViewModel()
+        {
+            ChangeMessageCommand = new DelegateCommand&lt;string&gt;((par) => GreetingMessage = par);
+        }
+
+        private string _greetingMessage = "Hellow World!";
+        public string GreetingMessage { get => _greetingMessage; set => SetProperty(ref _greetingMessage, value); }
+
+        public string NewMessage1 { get; } = "Bye-bye world";
+        public string NewMessage2 { get; } = "Long time no see, World!";
+
+        public DelegateCommand&lt;string&gt; ChangeMessageCommand { get; }
+    }
+}
+</code></pre>
+</div>
+<h2 id="ボタンを制御しよう">1.7　ボタンを制御しよう</h2>
+<h3 id="sec:IsEnabledで無効にする">1.7.1　IsEnabled属性で無効にする</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"/&gt;
+        &lt;Button Content="Change message"
+                Grid.Row="1"
+                Command="{Binding ChangeMessageCommand}"
+                IsEnabled="{Binding CanChangeMessage}"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ViewModel()
+        {
+            ChangeMessageCommand = new DelegateCommand(() => GreetingMessage = "Bye-bye world");
+        }
+
+        private string _greetingMessage = "Hellow World!";
+        public string GreetingMessage
+        {
+            get => _greetingMessage;
+            set
+            {
+                if (SetProperty(ref _greetingMessage, value))
+                {
+                    CanChangeMessage = false;
+                }
+            }
+        }
+
+        private bool _canChangeMessage = true;
+        public bool CanChangeMessage { get => _canChangeMessage; private set => SetProperty(ref _canChangeMessage, value); }
+
+        public DelegateCommand ChangeMessageCommand { get; }
+    }
+}</code></pre>
+</div>
+<h3
+id="sec:DelegateCommandで無効にする">1.7.2　DelegateCommandで無効にする</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ViewModel()
+        {
+            ChangeMessageCommand = new DelegateCommand(
+                                    () => GreetingMessage = "Bye-bye world",
+                                    () => GreetingMessage != "Bye-bye world")
+                .ObservesProperty(() => GreetingMessage);
+        }
+
+        private string _greetingMessage = "Hellow World!";
+        public string GreetingMessage { get => _greetingMessage; set => SetProperty(ref _greetingMessage, value); }
+
+        public DelegateCommand ChangeMessageCommand { get; }
+    }
+}
+</code></pre>
+</div>
+<div class="indentedColoredBox">
+<pre class="sourceCode"><code class="sourceCode">new DelegateCommand(...)
+        .ObservesProperty(() => propertyname)
+        .ObservesProperty(() => propertyname2);
+</code></pre>
+</div>
+<h3 id="sec:ボタンを無くしてしまう">1.7.3　ボタンを消してしまう</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+    &lt;Window.Resources&gt;
+        &lt;BooleanToVisibilityConverter x:Key="CollapseForFalse"/&gt;
+    &lt;/Window.Resources&gt;
+    
+    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"/&gt;
+        &lt;Button Content="Change message"
+                Grid.Row="1"
+                Command="{Binding ChangeMessageCommand}"
+                Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Self},
+                                     Converter={StaticResource CollapseForFalse}}"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</code></pre>
+</div>
+<h2 id="sec:見栄えを変えよう">1.8　見栄えを変えよう</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml(説明のベースにするサンプルコード)</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+    
+    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"/&gt;
+        &lt;Button Content="Change message"
+                Grid.Row="1"
+                Command="{Binding ChangeMessageCommand}"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs(説明のベースにするサンプルコード)</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ViewModel()
+        {
+            ChangeMessageCommand = new DelegateCommand(() => GreetingMessage = "Bye-bye world");
+        }
+
+        private string _greetingMessage = "Hellow World!";
+        public string GreetingMessage { get => _greetingMessage; set => SetProperty(ref _greetingMessage, value); }
+
+        public DelegateCommand ChangeMessageCommand { get; }
+    }
+}</code></pre>
+</div>
+<h3 id="sec:文字列の見栄え">1.8.1　文字列の見栄え</h3>
+<h4 id="文字列を中央に寄せる">文字列を中央に寄せる</h4>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode">&lt;TextBlock Text="{Binding GreetingMessage}"
+           TextAlignment="Center"/&gt;
+</code></pre>
+</div>
+<h4 id="sec:文字サイズを変える">文字サイズを変える</h4>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode">&lt;TextBlock Text="{Binding GreetingMessage}"
+           FontSize="20"/&gt;
+</code></pre>
+</div>
+<h4 id="sec:文字色を変える">文字色を変える</h4>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode">&lt;TextBlock Text="{Binding GreetingMessage}"
+           Foreground="Pink"/&gt;
+</code></pre>
+</div>
+<h4 id="sec:フォントを変える">フォントを変える</h4>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode">&lt;TextBlock Text="{Binding GreetingMessage}"
+           FontFamily="Arial Black"/&gt;
+</code></pre>
+</div>
+<h4 id="装飾を加える">装飾を加える</h4>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode">&lt;TextBlock Text="{Binding GreetingMessage}"
+           TextDecorations="Underline"/&gt;
+</code></pre>
+</div>
+<h3 id="textblockの見栄え">1.8.2　TextBlockの見栄え</h3>
+<h4 id="背景色">背景色</h4>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode">&lt;TextBlock Text="{Binding GreetingMessage}"
+           Background="LightBlue"/&gt;
+</code></pre>
+</div>
+<h4 id="sec:Margin">周りに余白を作る</h4>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode">&lt;TextBlock Text="{Binding GreetingMessage}"
+           Background="LightBlue"
+           Margin="10"/&gt;
+</code></pre>
+</div>
+<h3 id="文字列の周りに余白を作る">1.8.3　文字列の周りに余白を作る</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode">&lt;TextBlock Text="{Binding GreetingMessage}"
+           Background="LightBlue"
+           Padding="10"/&gt;
+</code></pre>
+</div>
+<h4 id="textblockのサイズを指定する">TextBlockのサイズを指定する</h4>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode">&lt;TextBlock Text="{Binding GreetingMessage}"
+           Background="LightBlue"
+           Width="100" Height="40"/&gt;
+</code></pre>
+</div>
+<h4 id="textblockの配置">TextBlockの配置</h4>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode">&lt;TextBlock Text="{Binding GreetingMessage}"
+           Background="LightBlue"
+           Width="100" Height="20"
+           HorizontalAlignment="Right"
+           VerticalAlignment="Center"/>
+</code></pre>
+</div>
+<h3 id="ボタンらしくする">1.8.4　ボタンらしくする</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode">&lt;TextBlock Text="{Binding GreetingMessage}"
+           Background="LightBlue"
+           Width="100" Height="20"
+           HorizontalAlignment="Center"
+           VerticalAlignment="Center"/&gt;
+&lt;Button Content="Change message"
+        Grid.Row="1"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Command="{Binding ChangeMessageCommand}"/&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode">&lt;StackPanel Grid.Row="1"&gt;
+    &lt;Button Content="Change message"
+        HorizontalAlignment="Center"
+        Command="{Binding ChangeMessageCommand}"/&gt;
+    &lt;Button Content="Change message No.2"
+        HorizontalAlignment="Center"
+        Command="{Binding ChangeMessageCommand}"/&gt;
+&lt;/StackPanel&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode">&lt;StackPanel Grid.Row="1"&gt;
+    &lt;Button Content="Change message"
+            HorizontalAlignment="Center"
+            MinWidth="140"
+            Command="{Binding ChangeMessageCommand}"/&gt;
+    &lt;Button Content="Change message No.2"
+            HorizontalAlignment="Center"
+            MinWidth="140"
+            Command="{Binding ChangeMessageCommand}"/&gt;
+&lt;/StackPanel&gt;
+</code></pre>
+</div>
+<h2 id="sec:見栄えを統一しよう">1.9　見栄えを統一しよう</h2>
+<h3 id="リソースで統一">1.9.1　リソースで統一</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+    &lt;Window.Resources&gt;
+        &lt;SolidColorBrush x:Key="TextColor"&gt;Red&lt;/SolidColorBrush&gt;
+        &lt;system:Double x:Key="TextSize"&gt;20&lt;/system:Double&gt;
+        &lt;TextAlignment x:Key="TextPosition"&gt;Center&lt;/TextAlignment&gt;
+    &lt;/Window.Resources&gt;
+
+    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"
+                   Foreground="{StaticResource TextColor}"
+                   FontSize="{StaticResource TextSize}"
+                   TextAlignment="{StaticResource TextPosition}"
+                   /&gt;
+        &lt;Button Content="Change message"
+                Grid.Row="1"
+                Command="{Binding ChangeMessageCommand}"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h3 id="スタイルで統一">1.9.2　スタイルで統一</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+    &lt;Window.Resources&gt;
+        &lt;SolidColorBrush x:Key="TextColor"&gt;Red&lt;/SolidColorBrush&gt;
+        &lt;system:Double x:Key="TextSize"&gt;20&lt;/system:Double&gt;
+        &lt;TextAlignment x:Key="TextPosition"&gt;Center&lt;/TextAlignment&gt;
+        &lt;Style x:Key="TextStyle" TargetType="{x:Type TextBlock}"&gt;
+            &lt;Setter Property="Foreground" Value="{StaticResource TextColor}"/&gt;
+            &lt;Setter Property="FontSize" Value="{StaticResource TextSize}"/&gt;
+            &lt;Setter Property="TextAlignment" Value="{StaticResource TextPosition}"/&gt;
+        &lt;/Style&gt;
+    &lt;/Window.Resources&gt;
+
+    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"
+                   Style="{StaticResource TextStyle}"
+                   /&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"
+                   Style="{StaticResource TextStyle}"
+                   FontSize="25"
+                   Grid.Row="1"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h3 id="リソースを配置する場所">1.9.3　リソースを配置する場所</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;Grid&gt;
+        &lt;Grid.Resources&gt;
+            &lt;SolidColorBrush x:Key="TextColor"&gt;Red&lt;/SolidColorBrush&gt;
+            &lt;system:Double x:Key="TextSize"&gt;20&lt;/system:Double&gt;
+            &lt;TextAlignment x:Key="TextPosition"&gt;Center&lt;/TextAlignment&gt;
+            &lt;Style x:Key="TextStyle" TargetType="{x:Type TextBlock}"&gt;
+                &lt;Setter Property="Foreground" Value="{StaticResource TextColor}"/&gt;
+                &lt;Setter Property="FontSize" Value="{StaticResource TextSize}"/&gt;
+                &lt;Setter Property="TextAlignment" Value="{StaticResource TextPosition}"/&gt;
+            &lt;/Style&gt;
+        &lt;/Grid.Resources&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"
+                   Style="{StaticResource TextStyle}"
+                   /&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"
+                   Style="{StaticResource TextStyle}"
+                   FontSize="25"
+                   Grid.Row="1"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>CommonResources.xaml(リソース定義ファイル)</h5>
+&lt;ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"&gt;
+    &lt;SolidColorBrush x:Key="TextColor"&gt;Red&lt;/SolidColorBrush&gt;
+    &lt;system:Double x:Key="TextSize"&gt;20&lt;/system:Double&gt;
+    &lt;TextAlignment x:Key="TextPosition"&gt;Center&lt;/TextAlignment&gt;
+    &lt;Style x:Key="TextStyle" TargetType="{x:Type TextBlock}"&gt;
+        &lt;Setter Property="Foreground" Value="{StaticResource TextColor}"/&gt;
+        &lt;Setter Property="FontSize" Value="{StaticResource TextSize}"/&gt;
+        &lt;Setter Property="TextAlignment" Value="{StaticResource TextPosition}"/&gt;
+    &lt;/Style&gt;
+&lt;/ResourceDictionary&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+    &lt;Window.Resources&gt;
+        &lt;ResourceDictionary&gt;
+            &lt;ResourceDictionary.MergedDictionaries&gt;
+                &lt;ResourceDictionary Source="pack://Application:,,,/CommonResources.xaml"/&gt;
+            &lt;/ResourceDictionary.MergedDictionaries&gt;
+        &lt;/ResourceDictionary&gt;
+        &lt;!-- ... ここにMainWindow.xaml独自のリソースを書ける--&gt;
+    &lt;/Window.Resources&gt;
+    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"
+                   Style="{StaticResource TextStyle}"
+                   /&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"
+                   Style="{StaticResource TextStyle}"
+                   FontSize="25"
+                   Grid.Row="1"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+    &lt;Window.Resources&gt;
+        &lt;ResourceDictionary&gt;
+            &lt;ResourceDictionary.MergedDictionaries&gt;
+                &lt;ResourceDictionary Source="/ResourceSupplier;component/CommonResources.xaml"/&gt;
+            &lt;/ResourceDictionary.MergedDictionaries&gt;
+        &lt;/ResourceDictionary&gt;
+        &lt;!-- ... ここにMainWindow.xaml独自のリソースを書ける--&gt;
+    &lt;/Window.Resources&gt;
+    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"
+                   Style="{StaticResource TextStyle}"
+                   /&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"
+                   Style="{StaticResource TextStyle}"
+                   FontSize="25"
+                   Grid.Row="1"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>App.xaml</h5>
+&lt;Application x:Class="SampleCode.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SampleCode"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             StartupUri="MainWindow.xaml"&gt;
+    &lt;Application.Resources&gt;
+        &lt;SolidColorBrush x:Key="TextColor"&gt;Red&lt;/SolidColorBrush&gt;
+        &lt;system:Double x:Key="TextSize"&gt;20&lt;/system:Double&gt;
+        &lt;TextAlignment x:Key="TextPosition"&gt;Center&lt;/TextAlignment&gt;
+        &lt;Style x:Key="TextStyle" TargetType="{x:Type TextBlock}"&gt;
+            &lt;Setter Property="Foreground" Value="{StaticResource TextColor}"/&gt;
+            &lt;Setter Property="FontSize" Value="{StaticResource TextSize}"/&gt;
+            &lt;Setter Property="TextAlignment" Value="{StaticResource TextPosition}"/&gt;
+        &lt;/Style&gt;
+    &lt;/Application.Resources&gt;
+&lt;/Application&gt;
+
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"
+                   Style="{StaticResource TextStyle}"
+                   /&gt;
+        &lt;TextBlock Text="{Binding GreetingMessage}"
+                   Style="{StaticResource TextStyle}"
+                   FontSize="25"
+                   Grid.Row="1"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</code></pre>
+</div>
+<h1 id="コンテナ要素">2章 コンテナ要素</h1>
+<h2 id="grid">2.1　Grid</h2>
+<h5 id="行を作る">行を作る</h5>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition Height="30"/&gt;
+            &lt;RowDefinition Height="Auto"/&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition Height="*"/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h5 id="列を作る">列を作る</h5>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Grid&gt;
+        &lt;Grid.ColumnDefinitions&gt;
+            &lt;ColumnDefinition Width="30"/&gt;
+            &lt;ColumnDefinition Width="Auto"/&gt;
+            &lt;ColumnDefinition/&gt;
+            &lt;ColumnDefinition Width="2*"/&gt;
+        &lt;/Grid.ColumnDefinitions&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h5 id="コントロールを配置する">コントロールを配置する</h5>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;Grid.ColumnDefinitions&gt;
+            &lt;ColumnDefinition/&gt;
+            &lt;ColumnDefinition/&gt;
+            &lt;ColumnDefinition/&gt;
+        &lt;/Grid.ColumnDefinitions&gt;
+
+        &lt;TextBlock Grid.Row="0" Grid.Column="0"
+                   Text="Grid.Row=0&amp;#xa;Grid.Column=0" Background="White"/&gt;
+        &lt;TextBlock Grid.Row="1" Grid.Column="0"
+                   Text="Grid.Row=1&amp;#xa;Grid.Column=0" Background="LightGray"/&gt;
+        &lt;TextBlock Grid.Row="1" Grid.Column="1"
+                   Text="Grid.Row=1&amp;#xa;Grid.Column=1" Background="Gray"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h5 id="複数の行や列に配置する">複数の行や列に配置する</h5>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="300"&gt;
+    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;Grid.ColumnDefinitions&gt;
+            &lt;ColumnDefinition/&gt;
+            &lt;ColumnDefinition/&gt;
+            &lt;ColumnDefinition/&gt;
+        &lt;/Grid.ColumnDefinitions&gt;
+
+        &lt;TextBlock Grid.Row="0" Grid.Column="0"
+                   Grid.ColumnSpan="3"
+                   Text="ColumnSpan=3" Background="White"/&gt;
+        &lt;TextBlock Grid.Row="1" Grid.Column="0" 
+                   Grid.RowSpan="2"
+                   Text="ColumnSpan=3" Background="LightGray"/&gt;
+        &lt;TextBlock Grid.Row="1" Grid.Column="1" 
+                   Grid.RowSpan="2" Grid.ColumnSpan="2"
+                   Text="ColumnSpan=2, RowSpan=2" Background="Gray"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h2 id="stackpanel">2.2　StackPanel</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;StackPanel&gt;
+        &lt;TextBlock Text="First element"
+                         Background="White"/&gt;
+        &lt;TextBlock Text="Second element"
+                         Background="LightGray"/&gt;
+        &lt;TextBlock Text="Third element"
+                         Background="Gray"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h5
+id="コントロールの周りに余白を作る">コントロールの周りに余白を作る</h5>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;StackPanel&gt;
+        &lt;TextBlock Text="First element"
+                   Background="White" Margin="10"/&gt;
+        &lt;TextBlock Text="Second element"
+                   Background="LightGray" Margin="10"/&gt;
+        &lt;TextBlock Text="Third element"
+                   Background="Gray" Margin="10"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h5 id="コントロールを横に並べる">コントロールを横に並べる</h5>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="240"&gt;
+    &lt;StackPanel Orientation="Horizontal"&gt;
+        &lt;TextBlock Text="First element"
+                   Background="White"/&gt;
+        &lt;TextBlock Text="Second element"
+                   Background="LightGray"/&gt;
+        &lt;TextBlock Text="Third element"
+                   Background="Gray"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h5 id="stackpanelのサイズは中身次第">StackPanelのサイズは中身次第</h5>
+<h2 id="scrollviewer">2.3　ScrollViewer</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;ScrollViewer VerticalScrollBarVisibility="Auto"
+                HorizontalScrollBarVisibility="Auto"&gt;
+        &lt;StackPanel Orientation="Horizontal">
+            &lt;TextBlock Text="First element"
+                   Background="White"/>
+            &lt;TextBlock Text="Second element"
+                   Background="LightGray"/>
+            &lt;TextBlock Text="Third element"
+                   Background="Gray"/>
+        &lt;/StackPanel>
+    &lt;/ScrollViewer>
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h6 id="ScrollBarVisibilityの値"></h6>
+<h2 id="wrappanel">2.4　WrapPanel</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;WrapPanel Orientation="Horizontal"&gt;
+        &lt;TextBlock Text="First element"
+                   Width="80" Height="20"
+                   Background="White"/&gt;
+        &lt;TextBlock Text="Second element"
+                   Width="80" Height="20"
+                   Background="LightGray"/&gt;
+        &lt;TextBlock Text="Third element"
+                   Width="80" Height="20"
+                   Background="Gray"/&gt;
+    &lt;/WrapPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h2 id="canvas">2.5　Canvas</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Canvas&gt;
+        &lt;TextBlock Text="Left=0, Top=0" 
+                   Canvas.Left="0" Canvas.Top="0"
+                   Background="White"/&gt;
+        &lt;TextBlock Text="Right=30, Top=30"
+                   Canvas.Right="30" Canvas.Top="30"
+                   Background="LightGray"/&gt;
+        &lt;TextBlock Text="Left=60, Bottom=10"
+                   Canvas.Left="60" Canvas.Bottom="10"
+                   Background="Gray"/&gt;
+    &lt;/Canvas&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h2 id="dockpanel">2.6　DockPanel</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="300"&gt;
+    &lt;DockPanel&gt;
+        &lt;TextBlock Text="DockPanel.Dock=Top"
+                   DockPanel.Dock="Top"
+                   Background="White"/&gt;
+        &lt;TextBlock Text="DockPanel.Dock=Left"
+                   DockPanel.Dock="Left"
+                   Background="LightGray"/&gt;
+        &lt;TextBlock Text="DockPanel.Dock=Bottom"
+                   DockPanel.Dock="Bottom"
+                   Background="Gray"/&gt;
+        &lt;TextBlock Text="DockPanel.Dock 指定無し"
+                   Foreground="White"
+                   Background="Black"/&gt;
+    &lt;/DockPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h5 id="最後の要素の配置">最後の要素の配置</h5>
+<h2 id="usercontrol">2.7　UserControl</h2>
+<h6 id="UserControl1"></h6>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>UserControl1.xaml（画面部品）</h5>
+&lt;UserControl x:Class="SampleCode.UserControl1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SampleCode"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="200"&gt;
+    &lt;Grid Background="Silver"&gt;
+        &lt;TextBlock Text="This is user content."  /&gt;
+    &lt;/Grid&gt;
+&lt;/UserControl&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;TabControl&gt;
+        &lt;TabItem Header="User control 1"&gt;
+            &lt;local:UserControl1/&gt;
+        &lt;/TabItem&gt;
+    &lt;/TabControl&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Grid&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition/&gt;
+            &lt;RowDefinition/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+
+        &lt;local:UserControl1 Grid.Row="0"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h2 id="window">2.8　Window</h2>
+<h5 id="ウィンドウ表示方法">ウィンドウ表示方法</h5>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ウィンドウ表示方法</h5>    var window = new MyWindow();
+    window.Show();          // 普通のウィンドウとして表示
+    window.ShowDialog();    // モーダルなウィンドウとして表示
+</code></pre>
+</div>
+<h1 id="その他のコンテナ要素">3章 その他のコンテナ要素</h1>
+<h2 id="border">3.1　Border</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Border BorderThickness="1"
+            BorderBrush="Black"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"&gt;
+        &lt;TextBlock Text="Black border around a TextBlock"/&gt;
+    &lt;/Border&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h5 id="cornerradius属性">CornerRadius属性</h5>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Border BorderThickness="1"
+            CornerRadius="10"
+            BorderBrush="Black"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Padding="10"&gt;
+        &lt;TextBlock Text="CornerRadius=5"/&gt;
+    &lt;/Border&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h2 id="groupbox">3.2　GroupBox</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;GroupBox Header="MyGroup"
+              Margin="20"&gt;
+        &lt;TextBlock Text="MyGroup content"
+                   Background="Silver"/&gt;
+    &lt;/GroupBox&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;GroupBox Margin="20"&gt;
+        &lt;GroupBox.Header&gt;
+            &lt;StackPanel Orientation="Horizontal"&gt;
+                &lt;Ellipse Fill="Red"
+                         Width="5" Height="5"/&gt;
+                &lt;TextBlock Text="MyHeader"/&gt;
+            &lt;/StackPanel&gt;
+        &lt;/GroupBox.Header&gt;
+        &lt;TextBlock Text="MyGroup content"
+                   Background="Silver"/&gt;
+    &lt;/GroupBox&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h2 id="tabcontrol">3.3　TabControl</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+            Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;TabControl Margin="20"&gt;
+        &lt;TabItem Header="Tab 1"&gt;
+            &lt;StackPanel&gt;
+                &lt;TextBlock Text="Content of Tab 1"/&gt;
+                &lt;Rectangle Stroke="Gray" Fill="Silver"
+                           StrokeThickness="4"
+                         Width="80" Height="20"/&gt;
+            &lt;/StackPanel&gt;
+        &lt;/TabItem&gt;
+        &lt;TabItem&gt;
+            &lt;TabItem.Header&gt;
+                &lt;StackPanel Orientation="Horizontal"&gt;
+                &lt;Ellipse Fill="Red"
+                         Width="10" Height="10"/&gt;
+                &lt;TextBlock Text="Tab 2"/&gt;
+                &lt;/StackPanel&gt;
+            &lt;/TabItem.Header&gt;
+            &lt;local:UserControl1/&gt;
+        &lt;/TabItem&gt;
+    &lt;/TabControl&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h4 id="タブを表示する位置">タブを表示する位置</h4>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;TabControl Margin="20"
+                TabStripPlacement="Left"&gt;
+        &lt;TabItem Header="Tab 1"&gt;
+            &lt;TextBlock Text="Content of Tab 1"/&gt;
+        &lt;/TabItem&gt;
+        &lt;TabItem Header="Tab 2"&gt;
+            &lt;TextBlock Text="Content of Tab 2"/&gt;
+        &lt;/TabItem&gt;
+    &lt;/TabControl&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h2 id="expander">3.4　Expander</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Expander Header="My Expander" Margin="20"&gt;
+        &lt;TextBlock Text="This is content"/&gt;
+    &lt;/Expander&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h2 id="viewbox">3.5　ViewBox</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Viewbox&gt;
+        &lt;TextBlock Text="Hello World!"
+                   Background="Silver"/&gt;
+    &lt;/Viewbox&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h1 id="表示用要素">4章 表示用要素</h1>
+<h2 id="sec:TextBlock">4.1　TextBlock</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;TextBlock Text="My Text"
+               FontFamily="MS Gothic"
+               FontSize="20"
+               FontStyle="Italic"
+               FontWeight="Bold"
+               Background="Silver"
+               Margin="20"/&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h4 id="複数行の文字列と文字列の配置">複数行の文字列と文字列の配置</h4>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;TextBlock
+               TextAlignment="Center"
+               LineHeight="30"
+               Background="Silver"
+               Margin="20"&gt;
+        First line &lt;LineBreak/&gt;
+        Second 
+        Line
+    &lt;/TextBlock&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h5 id="文字列がはみ出す場合">文字列がはみ出す場合</h5>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;TextBlock TextTrimming="WordEllipsis"
+               TextWrapping="Wrap"
+               Background="Silver"
+               Margin="20"&gt;
+        If the string to be displayed is too long for the size of the TextBox, part of the string will not be displayed.
+    &lt;/TextBlock&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h2 id="textbox">4.2　TextBox</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel&gt;
+        &lt;TextBox Text="{Binding MyString}"
+                 FontFamily="MS Gothic"
+                 FontSize="20"
+                 FontStyle="Italic"
+                 FontWeight="Bold"
+                 Background="Silver"
+                 Margin="20"/&gt;
+        &lt;TextBlock Text="{Binding MyString}"/&gt;
+        &lt;Button Content="No operation. Just to get focus"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        private string _myString = "My Text";
+        public string MyString { get => _myString; set => SetProperty(ref _myString, value); }
+    }
+}</code></pre>
+</div>
+<div class="indentedColoredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5></h5>&lt;TextBox Text="{Binding MyString, UpdateSourceTrigger=PropertyChanged}"
+</code></pre>
+</div>
+<h5 id="入力文字列のチェック">入力文字列のチェック</h5>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+    &lt;Window.Resources&gt;
+        &lt;BooleanToVisibilityConverter x:Key="CollapseForFalse"/&gt;
+    &lt;/Window.Resources&gt;
+
+    &lt;Grid Margin="20"&gt;
+        &lt;TextBox Text="{Binding MyString, UpdateSourceTrigger=PropertyChanged}"/&gt;
+        &lt;Border Visibility="{Binding ErrorOnValue, Converter={StaticResource CollapseForFalse}}"
+                BorderThickness="1"
+                BorderBrush="Red"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Mvvm;
+using System.Text.RegularExpressions;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        private string _myString;
+        public string? MyString
+        {
+            get => _myString;
+            set
+            {
+                if (SetProperty(ref _myString, value))
+                {
+                    ErrorOnValue = !DoubleFormat.IsMatch(_myString);
+                }
+            }
+        }
+        protected readonly Regex DoubleFormat = new Regex("^(\\d+\\.\\d|\\d+)$");
+
+        private bool _errorOnValue = false;
+        public bool ErrorOnValue { get => _errorOnValue; set=>SetProperty(ref _errorOnValue, value); }
+    }
+}</code></pre>
+</div>
+<h2 id="progressbar">4.3　ProgressBar</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+    
+    &lt;ProgressBar Value="{Binding Value}"
+                 Minimum="{Binding Minimum}"
+                 Maximum="{Binding Maximum}"
+                 Width="150" Height="15"/&gt;
+&lt;/Window&gt;</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        private double _value = 30;
+        public double Value { get => _value; set => SetProperty(ref _value, value); }
+
+        private double _minimum = 0;
+        public double Minimum { get => _minimum; set => SetProperty(ref _minimum, value); }
+
+        private double _maximum = 100;
+        public double Maximum { get => _maximum; set => SetProperty(ref _maximum, value); }
+    }
+}</code></pre>
+</div>
+<h2 id="label">4.4　Label</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="170" Width="200"&gt;
+    &lt;StackPanel Margin="20"&gt;
+        &lt;StackPanel Orientation="Horizontal" Margin="20"&gt;
+            &lt;Label Content="Enter _Number"
+                   Target="{Binding ElementName=EditInput}"
+                   Background="Silver"/&gt;
+            &lt;TextBox Name="EditInput"
+                     Text="{Binding StringProperty}"
+                     Width="60"
+                     Background="LightGray"&gt;
+            &lt;/TextBox&gt;
+        &lt;/StackPanel&gt;
+        &lt;Button Content="OK"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h2 id="slider">4.5　Slider</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel Margin="20"&gt;
+        &lt;Slider Minimum="0"
+                Maximum="100"
+                Value="{Binding SliderValueProperty}"
+                Orientation="Horizontal"
+                TickPlacement="BottomRight"
+                TickFrequency="10"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        private double _sliderValueProperty = 0;
+        public double SliderValueProperty { get => _sliderValueProperty; set=> SetProperty(ref _sliderValueProperty, value); }  
+    }
+}
+</code></pre>
+</div>
+<h5
+id="参考xamlだけでスライダーの値を表示する">参考：Xamlだけでスライダーの値を表示する</h5>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;StackPanel Margin="20"&gt;
+        &lt;Slider Minimum="0"
+                Maximum="100"
+                TickPlacement="BottomRight"
+                TickFrequency="10"
+                Name="MySlider"
+                /&gt;
+        &lt;TextBlock Text="{Binding Value,ElementName=MySlider}"
+                   Width="50"
+                   Background="Silver"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h1 id="ボタン">5章 ボタン</h1>
+<h2 id="button">5.1　Button</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel Margin="20"&gt;
+        &lt;Button Content="My button"
+                Command="{Binding MyCommand}"/&gt;
+        &lt;TextBlock Text="{Binding StringProperty}"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h6 id="Buttonのビューモデル"></h6>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel:BindableBase
+    {
+        public ViewModel()
+        {
+            MyCommand = new(
+                () =>
+                {
+                    Count++;
+                    StringProperty = "Button is pressed:" + Count.ToString();
+                });
+        }
+
+        private int Count = 0;
+
+        private string _stringProperty = string.Empty;
+        public string StringProperty { get => _stringProperty; set => SetProperty(ref _stringProperty, value); }
+
+        public DelegateCommand MyCommand { get; }
+    }
+}
+</code></pre>
+</div>
+<h2 id="repeatbutton">5.2　RepeatButton</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel Margin="20"&gt;
+        &lt;RepeatButton Content="My repeat button"
+                          Command="{Binding MyCommand}"/&gt;
+        &lt;TextBlock Text="{Binding StringProperty}"
+                       Background="Silver"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h2 id="radiobutton">5.3　RadioButton</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel Margin="20"&gt;
+        &lt;RadioButton Content="Button #1"
+                    Command="{Binding MyCommand}"
+                     CommandParameter="1"/&gt;
+        &lt;RadioButton Content="Button #2"
+                    Command="{Binding MyCommand}"
+                     CommandParameter="2"/&gt;
+        &lt;RadioButton Content="Button #3"
+                    Command="{Binding MyCommand}"
+                     CommandParameter="3"/&gt;
+        &lt;TextBlock Text="{Binding StringProperty}"
+                   Background="Silver"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ViewModel()
+        {
+            MyCommand = new(
+                (par) =>
+                {
+                    StringProperty = "Button is pressed:" + par;
+                });
+        }
+        private string _stringProperty = string.Empty;
+        public string StringProperty { get => _stringProperty; set => SetProperty(ref _stringProperty, value); }
+
+        public DelegateCommand&lt;string&gt; MyCommand { get; }
+    }
+}
+</code></pre>
+</div>
+<h5
+id="コンテナ要素によるグルーピング">コンテナ要素によるグルーピング</h5>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="170" Width="240"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel Margin="20"&gt;
+        &lt;GroupBox Header="Group 1"&gt;
+            &lt;StackPanel Orientation="Horizontal"&gt;
+                &lt;RadioButton Content="Button #1-1"
+                    Command="{Binding MyCommand}"
+                     CommandParameter="1-1"/&gt;
+                &lt;RadioButton Content="Button #1-2"
+                    Command="{Binding MyCommand}"
+                     CommandParameter="1-2"/&gt;
+            &lt;/StackPanel&gt;
+        &lt;/GroupBox&gt;
+        &lt;GroupBox Header="Group2"&gt;
+            &lt;StackPanel Orientation="Horizontal"&gt;
+                &lt;RadioButton Content="Button #2-1"
+                    Command="{Binding MyCommand}"
+                     CommandParameter="#2-1"/&gt;
+                &lt;RadioButton Content="Button #2-2"
+                    Command="{Binding MyCommand}"
+                     CommandParameter="2-2"/&gt;
+            &lt;/StackPanel&gt;
+        &lt;/GroupBox&gt;
+        &lt;TextBlock Text="{Binding StringProperty}"
+                   Background="Silver"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h4 id="グループ名によるグルーピング">グループ名によるグルーピング</h4>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="170" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel Margin="20"&gt;
+        &lt;RadioButton Content="Button #1-1"
+                     GroupName="Grp1"
+                     Command="{Binding MyCommand}"
+                     CommandParameter="1-1"/&gt;
+        &lt;RadioButton Content="Button #1-2"
+                     GroupName="Grp1"
+                     Command="{Binding MyCommand}"
+                     CommandParameter="1-2"/&gt;
+        &lt;RadioButton Content="Button #2-1"
+                     GroupName="Grp2"
+                     Command="{Binding MyCommand}"
+                     CommandParameter="2-1"/&gt;
+        &lt;RadioButton Content="Button #2-2"
+                     GroupName="Grp2"
+                     Command="{Binding MyCommand}"
+                     CommandParameter="2-2"/&gt;
+        &lt;TextBlock Text="{Binding StringProperty}"
+                   Background="Silver"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h2 id="checkboxとtogglebutton">5.4　CheckBoxとToggleButton</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel Margin="20"&gt;
+        &lt;CheckBox Content="Check box"
+                      IsChecked="{Binding CheckState}"/&gt;
+        &lt;ToggleButton Content="Toggle Button"
+                      IsChecked="{Binding CheckState}"/&gt;
+        &lt;TextBlock Text="{Binding StringProperty}"
+                   Background="Silver"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ViewModel()
+        {
+            SetStringProperty();
+        }
+
+        private string _stringProperty = string.Empty;
+        public string StringProperty { get => _stringProperty; set => SetProperty(ref _stringProperty, value); }
+
+        private bool _checkState;
+        public bool CheckState
+        {
+            get => _checkState;
+            set
+            {
+                if(SetProperty(ref _checkState, value))
+                {
+                    SetStringProperty();
+                }
+            }
+        }
+
+        private void SetStringProperty()
+            => StringProperty = _checkState ? "Checked" : "UnChecked";
+    }
+}
+</code></pre>
+</div>
+<h5 id="isthreestate属性">IsThreeState属性</h5>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="150" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel Margin="20"&gt;
+        &lt;CheckBox Content="Check box"
+                  IsChecked="{Binding CheckState}"
+                  IsThreeState="True"/&gt;
+        &lt;ToggleButton Content="Toggle Button"
+                      IsChecked="{Binding CheckState}"
+                      IsThreeState="True"/&gt;
+        &lt;TextBlock Text="{Binding StringProperty}"
+                   Background="Silver"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ViewModel()
+        {
+            SetStringProperty();
+        }
+
+        private string _stringProperty = string.Empty;
+        public string StringProperty { get => _stringProperty; set => SetProperty(ref _stringProperty, value); }
+
+        private bool? _checkState;
+        public bool? CheckState
+        {
+            get => _checkState;
+            set
+            {
+                if (SetProperty(ref _checkState, value))
+                {
+                    SetStringProperty();
+                }
+            }
+        }
+
+        private void SetStringProperty()
+        {
+            if (_checkState == null)
+            {
+                StringProperty = "Undefined";
+            }
+            else
+            {
+                StringProperty = (bool)_checkState ? "Checked" : "UnChecked";
+            }
+        }
+
+    }
+}
+</code></pre>
+</div>
+<h1 id="一覧用要素">6章 一覧用要素</h1>
+<h2 id="listbox">6.1　ListBox</h2>
+<h3 id="xamlだけでリストを表示">6.1.1　Xamlだけでリストを表示</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="200" Width="200"&gt;
+
+    &lt;StackPanel Orientation="Horizontal" Margin="20"&gt;
+        &lt;ListBox&gt;
+            &lt;ListBoxItem&gt;
+                &lt;TextBlock Text="First item"/&gt;
+            &lt;/ListBoxItem&gt;
+            &lt;ListBoxItem&gt;
+                &lt;StackPanel Orientation="Horizontal"&gt;
+                    &lt;Ellipse Fill="Red" Width="10" Height="10"/&gt;
+                    &lt;TextBlock Text="Second item"/&gt;
+                &lt;/StackPanel&gt;
+            &lt;/ListBoxItem&gt;
+        &lt;/ListBox&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h3
+id="sec:ビューモデルにあるリストを表示">6.1.2　ビューモデルにあるリストを表示</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="200" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel Orientation="Horizontal" Margin="20"&gt;
+        &lt;Button Content="Add entry"
+                Command="{Binding AddEntryCommand}"/&gt;
+        &lt;ListBox ItemsSource="{Binding MyList}"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+using System.Collections.Generic;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ViewModel()
+        {
+            AddEntryCommand = new DelegateCommand(() =>
+            {
+                Count++;
+                MyList.Add(new DataClass("Entry: ", Count));
+            });
+        }
+        private int Count = 0;
+
+        public List&lt;DataClass&gt; MyList { get; } = new()
+        {
+            new DataClass("Item", 1),
+            new DataClass("Item", 2),
+            new DataClass("Item", 3)
+        };
+
+        public DelegateCommand AddEntryCommand { get; init; }
+    }
+
+    public class DataClass
+    {
+        public DataClass(string _title, int _number)
+        {
+            Number = _number;
+            Title = _title;
+        }
+
+        public int Number { get; init; }
+        public string Title { get; init; }
+    }
+}
+</code></pre>
+</div>
+<h5 id="tostringによる解決">ToString()による解決</h5>
+<p>　DataClassクラスのToString()がクラス名の代わりに適切な文字列を返すように変えれば、ListBoxにもその文字列が表示されます。</p>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>DataClassのToString()をオーバーライド</h5>
+public class DataClass
+{
+    public DataClass(string _title, int _number)
+    {
+        Number = _number;
+        Title = _title;
+    }
+
+    public int Number { get; init; }
+    public string Title { get; init; }
+
+    public override string ToString() => $"{Title} : {Number}";
+}
+</code></pre>
+</div>
+<h5 id="itemtemplate属性による解決">ItemTemplate属性による解決</h5>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="200" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel Orientation="Horizontal" Margin="20"&gt;
+        &lt;Button Content="Add entry"
+                Command="{Binding AddEntryCommand}"/&gt;
+        &lt;ListBox ItemsSource="{Binding MyList}"&gt;
+            &lt;ListBox.ItemTemplate&gt;
+                &lt;DataTemplate&gt;
+                    &lt;StackPanel Orientation="Horizontal"&gt;
+                        &lt;TextBlock Text="{Binding Title}"
+                                   VerticalAlignment="Center"/&gt;
+                        &lt;TextBlock Text=" : "
+                                   VerticalAlignment="Center"/&gt;
+                        &lt;TextBlock Text="{Binding Number}"
+                                   FontSize="20"/&gt;
+                    &lt;/StackPanel&gt;
+                &lt;/DataTemplate&gt;
+            &lt;/ListBox.ItemTemplate&gt;
+        &lt;/ListBox&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h3 id="sec:ListBoxアイテムの追加削除">6.1.3　アイテムの追加・削除</h3>
+<div class="indentedColoredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ViewModel()
+        {
+            AddEntryCommand = new DelegateCommand(() =>
+            {
+                Count++;
+                MyList.Add(new DataClass("Entry: ", Count));
+            });
+        }
+        private int Count = 0;
+
+        public ObservableCollection&lt;DataClass&gt; MyList { get; } = new()
+        {
+            new DataClass("Item", 1),
+            new DataClass("Item", 2),
+            new DataClass("Item", 3)
+        };
+
+        public DelegateCommand AddEntryCommand { get; init; }
+    }
+
+    public class DataClass
+    {
+        public DataClass(string _title, int _number)
+        {
+            Number = _number;
+            Title = _title;
+        }
+
+        public int Number { get; init; }
+        public string Title { get; init; }
+    }
+}</code></pre>
+</div>
+<h3 id="アイテムの選択">6.1.4　アイテムの選択</h3>
+<h3
+id="sec:選択されたアイテムを知る">6.1.5　選択されたアイテムを知る</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="200" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel&gt;
+            &lt;ListBox ItemsSource="{Binding MyList}"
+                     SelectedIndex="{Binding SelectedMyListIndex}"
+                     Margin="10"/&gt;
+        &lt;StackPanel Orientation="Horizontal"&gt;
+            &lt;TextBlock Text="SelectedIndex = "/&gt;
+            &lt;TextBlock Text="{Binding SelectedMyListIndex}"/&gt;
+        &lt;/StackPanel&gt;
+        &lt;StackPanel Orientation="Horizontal"&gt;
+            &lt;TextBlock Text="Selected Item = "/&gt;
+            &lt;TextBlock Text="{Binding SelectedMyListItem}"/&gt;
+        &lt;/StackPanel&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Mvvm;
+using System.Collections.ObjectModel;
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ObservableCollection&lt;DataClass&gt; MyList { get; } = new()
+        {
+            new DataClass("Item", 1),
+            new DataClass("Item", 2),
+            new DataClass("Item", 3)
+        };
+
+        private int _selectedMyListIndex = -1;
+        public int SelectedMyListIndex
+        {
+            get => _selectedMyListIndex;
+            set
+            {
+                if (SetProperty(ref _selectedMyListIndex, value) && (value >= 0))
+                {
+                    RaisePropertyChanged(nameof(SelectedMyListItem));
+                }
+            }
+        }
+
+        public DataClass? SelectedMyListItem
+        {
+            get => _selectedMyListIndex >= 0 ? MyList[SelectedMyListIndex] : null;
+        }
+    }
+
+    public class DataClass
+    {
+        public DataClass(string _title, int _number)
+        {
+            Number = _number;
+            Title = _title;
+        }
+
+        public int Number { get; init; }
+        public string Title { get; init; }
+
+        public override string ToString() => $"{Title} : {Number}";
+    }
+}</code></pre>
+</div>
+<h3
+id="sec:複数選択されたアイテムを知る">6.1.6　複数選択されたアイテムを知る</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="200" Width="200"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel&gt;
+        &lt;ListBox ItemsSource="{Binding MyList}"
+                     SelectionMode="Extended"
+                     Margin="10"&gt;
+            &lt;ListBox.ItemContainerStyle&gt;
+                &lt;Style TargetType="{x:Type ListBoxItem}"&gt;
+                    &lt;Setter Property="IsSelected" Value="{Binding IsSelected}"/&gt;
+                &lt;/Style&gt;
+            &lt;/ListBox.ItemContainerStyle&gt;
+        &lt;/ListBox&gt;
+        &lt;Button Content="ShowSelectedItemsCommand"
+                Command="{Binding ShowSelectedItemsCommand}"/&gt;
+        &lt;TextBlock Text="{Binding SelectedItemNames}"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ViewModel()
+        {
+            ShowSelectedItemsCommand = new DelegateCommand(() =>
+            {
+                StringBuilder sb = new("Selected items list:\n");
+                foreach (var item in MyList.ToList().FindAll(i => i.IsSelected))
+                {
+                    sb.AppendLine(item.ToString());
+                }
+                SelectedItemNames = sb.ToString();
+            });
+        }
+        public ObservableCollection&lt;DataClass&gt; MyList { get; } = new()
+        {
+            new DataClass("Item", 1),
+            new DataClass("Item", 2),
+            new DataClass("Item", 3)
+        };
+
+        public DelegateCommand ShowSelectedItemsCommand { get; }
+
+        private string _SelectedItemNames = string.Empty;
+        public string SelectedItemNames { get => _SelectedItemNames; set => SetProperty(ref _SelectedItemNames, value); }
+    }
+
+    public class DataClass
+    {
+        public DataClass(string _title, int _number)
+        {
+            Number = _number;
+            Title = _title;
+            IsSelected = false;
+        }
+
+        public int Number { get; init; }
+        public string Title { get; init; }
+        public bool IsSelected { get; set; }
+
+        public override string ToString() => $"{Title} : {Number}";
+    }
+}
+</code></pre>
+</div>
+<h2 id="datagrid">6.2　DataGrid</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;DataGrid ItemsSource="{Binding MyList}"
+              Margin="20"&gt;
+    &lt;/DataGrid&gt;
+&lt;/Window&gt;</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Mvvm;
+using System.Collections.ObjectModel;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ObservableCollection&lt;DataClass&gt; MyList { get; set; } = new()
+        {
+            new DataClass("Shiba", "Pochi", 3),
+            new DataClass("Sheltie", "Lucky", 12),
+            new DataClass("Golden retriever", "Daikichi", 5)
+        };
+    }
+
+    public class DataClass
+    {
+        public DataClass()
+                : this(string.Empty, string.Empty, 0) {}
+
+        public DataClass(string dogBreed, string name, int age)
+        {
+            DogBreed = dogBreed;
+            Name = name;
+            Age = age;
+        }
+
+        public string DogBreed { get;  set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+    }
+}
+</code></pre>
+</div>
+<h3 id="列を定義する">6.2.1　列を定義する</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;DataGrid ItemsSource="{Binding MyList}"
+                  AutoGenerateColumns="False"
+                  Margin="20"&gt;
+        &lt;DataGrid.Columns&gt;
+            &lt;DataGridTextColumn Header="犬種" Binding="{Binding DogBreed}"/&gt;
+            &lt;DataGridTextColumn Header="年齢" Binding="{Binding Age}"/&gt;
+        &lt;/DataGrid.Columns&gt;
+    &lt;/DataGrid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h3
+id="ヘッダー文字列の位置を調整">6.2.2　ヘッダー文字列の位置を調整</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;DataGrid ItemsSource="{Binding MyList}"
+                  AutoGenerateColumns="False"
+                  Margin="20"&gt;
+        &lt;DataGrid.ColumnHeaderStyle&gt;
+            &lt;Style TargetType="DataGridColumnHeader"&gt;
+                &lt;Setter Property="HorizontalContentAlignment" Value="Center"/&gt;
+            &lt;/Style&gt;
+        &lt;/DataGrid.ColumnHeaderStyle&gt;
+        &lt;DataGrid.Columns&gt;
+            &lt;DataGridTextColumn Header="犬種"
+                                Binding="{Binding DogBreed}"/&gt;
+            &lt;DataGridTextColumn Header="年齢"
+                                Binding="{Binding Age}"/&gt;
+        &lt;/DataGrid.Columns&gt;
+    &lt;/DataGrid&gt;
+&lt;/Window&gt;</code></pre>
+</div>
+<div class="indentedColoredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;DataGrid ItemsSource="{Binding MyList}"
+                  AutoGenerateColumns="False"
+                  Margin="20"&gt;
+        &lt;DataGrid.ColumnHeaderStyle&gt;
+            &lt;Style TargetType="DataGridColumnHeader"&gt;
+                &lt;Setter Property="HorizontalContentAlignment" Value="Stretch"/&gt;
+            &lt;/Style&gt;
+        &lt;/DataGrid.ColumnHeaderStyle&gt;
+        &lt;DataGrid.Columns&gt;
+            &lt;DataGridTextColumn Binding="{Binding DogBreed}"&gt;
+                &lt;DataGridTextColumn.Header&gt;
+                    &lt;TextBlock Text="犬種" TextAlignment="Center"/&gt;
+                &lt;/DataGridTextColumn.Header&gt;
+            &lt;/DataGridTextColumn&gt;
+            &lt;DataGridTextColumn Binding="{Binding Age}"&gt;
+                &lt;DataGridTextColumn.Header&gt;
+                    &lt;TextBlock Text="年齢" TextAlignment="Right"/&gt;
+                &lt;/DataGridTextColumn.Header&gt;
+            &lt;/DataGridTextColumn&gt;
+        &lt;/DataGrid.Columns&gt;
+    &lt;/DataGrid&gt;
+&lt;/Window&gt;</code></pre>
+</div>
+<h3 id="セルの表示位置を調整">6.2.3　セルの表示位置を調整</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel,IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+    &lt;DataGrid ItemsSource="{Binding MyList}" AutoGenerateColumns="False" Margin="20"&gt;
+        &lt;DataGrid.ColumnHeaderStyle&gt;
+            &lt;Style TargetType="DataGridColumnHeader"&gt;
+                &lt;Setter Property="HorizontalContentAlignment" Value="Stretch"/&gt;
+            &lt;/Style&gt;
+        &lt;/DataGrid.ColumnHeaderStyle&gt;
+        &lt;DataGrid.Columns&gt;
+            &lt;DataGridTemplateColumn&gt;
+                &lt;DataGridTemplateColumn.Header&gt;
+                    &lt;TextBlock Text="犬種" HorizontalAlignment="Center"/&gt;
+                &lt;/DataGridTemplateColumn.Header&gt;
+                &lt;DataGridTemplateColumn.CellTemplate&gt;
+                    &lt;DataTemplate&gt;
+                        &lt;TextBlock Text="{Binding DogBreed}"
+                                   TextAlignment="Center"/&gt;
+                    &lt;/DataTemplate&gt;
+                &lt;/DataGridTemplateColumn.CellTemplate&gt;
+            &lt;/DataGridTemplateColumn&gt;
+            &lt;DataGridTemplateColumn&gt;
+                &lt;DataGridTemplateColumn.Header&gt;
+                    &lt;TextBlock Text="年齢" HorizontalAlignment="Right"/&gt;
+                &lt;/DataGridTemplateColumn.Header&gt;
+                &lt;DataGridTemplateColumn.CellTemplate&gt;
+                    &lt;DataTemplate&gt;
+                        &lt;TextBlock Text="{Binding Age}"
+                                   TextAlignment="Right"
+                                   Padding="0,0,4,0"/&gt;
+                    &lt;/DataTemplate&gt;
+                &lt;/DataGridTemplateColumn.CellTemplate&gt;
+            &lt;/DataGridTemplateColumn&gt;
+        &lt;/DataGrid.Columns&gt;
+    &lt;/DataGrid&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="indentedColoredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml(CellTemplateの変更)</h5>
+&lt;DataGridTemplateColumn.CellTemplate&gt;
+    &lt;DataTemplate&gt;
+        &lt;StackPanel&gt;
+            &lt;TextBlock Text="{Binding Age}"
+                       TextAlignment="Right"
+                       Padding="0,0,4,0"/&gt;
+            &lt;TextBlock Text="{Binding Name}"
+                       TextAlignment="Center"/&gt;
+        &lt;/StackPanel&gt;
+    &lt;/DataTemplate&gt;
+&lt;/DataGridTemplateColumn.CellTemplate&gt;
+</code></pre>
+</div>
+<h3 id="datagridの動作を制限する">6.2.4　DataGridの動作を制限する</h3>
+<h3 id="アイテムの追加削除">6.2.5　アイテムの追加・削除</h3>
+<h3 id="アイテムの選択-1">6.2.6　アイテムの選択</h3>
+<h3 id="選択されたアイテムを知る">6.2.7　選択されたアイテムを知る</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml(SelectedIndexをバインド)</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel&gt;
+        &lt;DataGrid ItemsSource="{Binding MyList}"
+              SelectedIndex="{Binding SelectedMyListIndex}"
+              Margin="20"&gt;
+        &lt;/DataGrid&gt;
+        &lt;StackPanel Orientation="Horizontal"&gt;
+            &lt;TextBlock Text="SelectedIndex = "/&gt;
+            &lt;TextBlock Text="{Binding SelectedMyListIndex}"/&gt;
+        &lt;/StackPanel&gt;
+        &lt;StackPanel Orientation="Horizontal"&gt;
+            &lt;TextBlock Text="Selected Item = "/&gt;
+            &lt;TextBlock Text="{Binding SelectedMyListItem}"/&gt;
+        &lt;/StackPanel&gt;    &lt;/StackPanel&gt;
+&lt;/Window&gt;</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5></h5>
+using Prism.Mvvm;
+using System.Collections.ObjectModel;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ObservableCollection&lt;DataClass&gt; MyList { get; set; } = new()
+        {
+            new DataClass("Shiba", "Pochi", 3),
+            new DataClass("Sheltie", "Lucky", 12),
+            new DataClass("Golden retriever", "Daikichi", 5)
+        };
+
+        private int _selectedMyListIndex = -1;
+        public int SelectedMyListIndex
+        {
+            get => _selectedMyListIndex;
+            set
+            {
+                if (SetProperty(ref _selectedMyListIndex, value) && (value >= 0))
+                {
+                    RaisePropertyChanged(nameof(SelectedMyListItem));
+                }
+            }
+        }
+
+        public DataClass? SelectedMyListItem
+        {
+            get => _selectedMyListIndex >= 0 ? MyList[SelectedMyListIndex] : null;
+        }
+    }
+
+    public class DataClass
+    {
+        public DataClass()
+                : this(string.Empty, string.Empty, 0) { }
+
+        public DataClass(string dogBreed, string name, int age)
+        {
+            DogBreed = dogBreed;
+            Name = name;
+            Age = age;
+        }
+
+        public string DogBreed { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+
+        public override string ToString() => Name + " (" + DogBreed + ")";
+    }
+}</code></pre>
+</div>
+<h3
+id="複数選択されたアイテムを知る">6.2.8　複数選択されたアイテムを知る</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel&gt;
+        &lt;DataGrid ItemsSource="{Binding MyList}"
+              SelectedIndex="{Binding SelectedMyListIndex}"
+              Margin="20"&gt;
+            &lt;DataGrid.ItemContainerStyle&gt;
+                &lt;Style TargetType="{x:Type DataGridRow}"&gt;
+                    &lt;Setter Property="IsSelected" Value="{Binding IsSelected}"/&gt;
+                &lt;/Style&gt;
+            &lt;/DataGrid.ItemContainerStyle&gt;
+        &lt;/DataGrid&gt;
+        &lt;Button Content="ShowSelectedItemsCommand"
+                Command="{Binding ShowSelectedItemsCommand}"/&gt;
+        &lt;TextBlock Text="{Binding SelectedItemNames}"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ViewModel()
+        {
+            ShowSelectedItemsCommand = new DelegateCommand(() =>
+            {
+                StringBuilder sb = new("Selected items list:\n");
+                foreach (var item in MyList.ToList().FindAll(i => i.IsSelected))
+                {
+                    sb.AppendLine(item.ToString());
+                }
+                SelectedItemNames = sb.ToString();
+            });
+        }
+        public ObservableCollection&lt;DataClass&gt; MyList { get; } = new()
+        {
+            new DataClass("Item", 1),
+            new DataClass("Item", 2),
+            new DataClass("Item", 3)
+        };
+
+        public DelegateCommand ShowSelectedItemsCommand { get; }
+
+        private string _SelectedItemNames = string.Empty;
+        public string SelectedItemNames { get => _SelectedItemNames; set => SetProperty(ref _SelectedItemNames, value); }
+    }
+
+    public class DataClass
+    {
+        public DataClass(string _title, int _number)
+        {
+            Number = _number;
+            Title = _title;
+            IsSelected = false;
+        }
+
+        public int Number { get; init; }
+        public string Title { get; init; }
+        public bool IsSelected { get; set; }
+
+        public override string ToString() => $"{Title} : {Number}";
+    }
+}
+</code></pre>
+</div>
+<h2 id="treeview">6.3　TreeView</h2>
+<h3 id="xamlだけで実装">6.3.1　Xamlだけで実装</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel,IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+
+    &lt;TreeView Margin="20"&gt;
+        &lt;TreeViewItem Header="ぽち"&gt;
+            &lt;TextBlock Text="ボール"/&gt;
+        &lt;/TreeViewItem&gt;
+        &lt;TreeViewItem Header="ラッカー"&gt;
+            &lt;TextBlock Text="骨のおもちゃ"/&gt;
+        &lt;/TreeViewItem&gt;
+        &lt;TreeViewItem Header="でんすけ"&gt;
+            &lt;TextBlock Text="落ち葉"/&gt;
+            &lt;TextBlock Text="フリスビー"/&gt;
+        &lt;/TreeViewItem&gt;
+    &lt;/TreeView&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="indentedColoredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>TreeViewItemの子要素TextBlockの解釈</h5>
+&lt;TreeViewItem&gt;
+    &lt;TreeViewItem.Header&gt;
+        &lt;TextBlock Text="ボール"/&gt;
+    &lt;/TreeViewItem.Header&gt;
+&lt;/TreeViewItem&gt;
+</code></pre>
+</div>
+<h3
+id="ビューモデルにある木構造データを表示する">6.3.2　ビューモデルにある木構造データを表示する</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;TreeView ItemsSource="{Binding DogList}"
+              Margin="20"/&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Mvvm;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Controls;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ObservableCollection&lt;DogClass&gt; DogList { get; } = new()
+        {
+            new DogClass("芝", "ぽち", 3,
+                new List&lt;ToyClass&gt;()
+                {
+                    new ToyClass("ボール", "歯形あり")
+                }),
+            new DogClass("シェルティー", "ラッキー", 12,
+                new List&lt;ToyClass&gt;()
+                {
+                    new ToyClass("骨のおもちゃ", "新品")
+                }),
+            new DogClass("ゴールデンリトリーバー", "でんすけ", 5,
+                new List&lt;ToyClass&gt;() {
+                    new ToyClass("落ち葉", "行方不明"),
+                    new ToyClass("フリスビー", "半壊")
+                })
+        };
+    }
+
+    internal class DogClass : TreeViewItem
+    {
+        public DogClass(string _dogBreed, string _name, int _age, List&lt;ToyClass&gt; _toyList)
+        {
+            DogBreed = _dogBreed;
+            Header = _name;
+            Age = _age;
+            ItemsSource = _toyList;
+        }
+
+        public string DogBreed { get; set; }
+        public int Age { get; set; }
+    }
+
+    public class ToyClass : TreeViewItem
+    {
+        public ToyClass(string _name, string _state)
+        {
+            Header = _name;
+            State = _state;
+        }
+
+        public string State { get; set; }
+    }
+}
+</code></pre>
+</div>
+<h3
+id="自然なデータクラスによる実装">6.3.3　自然なデータクラスによる実装</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;TreeView ItemsSource="{Binding DogList}"
+              Margin="20"&gt;
+        &lt;TreeView.Resources&gt;
+            &lt;HierarchicalDataTemplate DataType="{x:Type local:DogClass}"
+                                      ItemsSource="{Binding ToyList}"&gt;
+                &lt;Border BorderThickness="1" BorderBrush="Gray"
+                        MinWidth="100"&gt;
+                    &lt;StackPanel&gt;
+                        &lt;TextBlock Text="{Binding Name}"/&gt;
+                        &lt;StackPanel Orientation="Horizontal"&gt;
+                            &lt;TextBlock Text="{Binding DogBreed}"/&gt;
+                            &lt;TextBlock Text=" : "/&gt;
+                            &lt;TextBlock Text="{Binding Age}"/&gt;
+                        &lt;/StackPanel&gt;
+                    &lt;/StackPanel&gt;
+                &lt;/Border&gt;
+            &lt;/HierarchicalDataTemplate&gt;
+            &lt;DataTemplate DataType="{x:Type local:ToyClass}"&gt;
+                &lt;StackPanel Orientation="Horizontal"&gt;
+                    &lt;TextBlock Text="{Binding Name}"/&gt;
+                    &lt;TextBlock Text=" : "/&gt;
+                    &lt;TextBlock Text="{Binding State}"/&gt;
+                &lt;/StackPanel&gt;
+            &lt;/DataTemplate&gt;
+        &lt;/TreeView.Resources&gt;
+    &lt;/TreeView&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Mvvm;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ObservableCollection&lt;DogClass&gt; DogList { get; set; } = new()
+        {
+            new DogClass("芝", "ぽち", 3,
+                new List&lt;ToyClass&gt;()
+                {
+                    new ToyClass("ボール", "歯形あり")
+                }),
+            new DogClass("シェルティー", "ラッキー", 12,
+                new List&lt;ToyClass&gt;()
+                {
+                    new ToyClass("骨のおもちゃ", "新品")
+                }),
+            new DogClass("ゴールデンリトリーバー", "でんすけ", 5,
+                new List&lt;ToyClass&gt;() {
+                    new ToyClass("落ち葉", "行方不明"),
+                    new ToyClass("フリスビー", "半壊")
+                })
+        };
+    }
+
+    public class DogClass
+    {
+        public DogClass(string _dogBreed, string _name, int _age, List&lt;ToyClass&gt; _toyList)
+        {
+            DogBreed = _dogBreed;
+            Name = _name;
+            Age = _age;
+            ToyList = _toyList;
+        }
+
+        public string DogBreed { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public List&lt;ToyClass&gt; ToyList { get; set; }
+    }
+
+    public class ToyClass
+    {
+        public ToyClass(string _name, string _state)
+        {
+            Name = _name;
+            State = _state;
+        }
+
+        public string Name { get; set; }
+        public string State { get; set; }
+    }
+}
+</code></pre>
+</div>
+<h3 id="選択されたアイテムを知る-1">6.3.4　選択されたアイテムを知る</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="360"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel Orientation="Horizontal"&gt;
+        &lt;TreeView ItemsSource="{Binding DogList}"
+              Margin="20"&gt;
+            &lt;TreeView.Resources&gt;
+                &lt;HierarchicalDataTemplate DataType="{x:Type local:DogClass}"
+                                      ItemsSource="{Binding ToyList}"&gt;
+                    &lt;Border BorderThickness="1" BorderBrush="Gray"
+                        MinWidth="100"&gt;
+                        &lt;StackPanel&gt;
+                            &lt;TextBlock Text="{Binding Name}"/&gt;
+                            &lt;StackPanel Orientation="Horizontal"&gt;
+                                &lt;TextBlock Text="{Binding DogBreed}"/&gt;
+                                &lt;TextBlock Text=" : "/&gt;
+                                &lt;TextBlock Text="{Binding Age}"/&gt;
+                            &lt;/StackPanel&gt;
+                        &lt;/StackPanel&gt;
+                    &lt;/Border&gt;
+                &lt;/HierarchicalDataTemplate&gt;
+                &lt;DataTemplate DataType="{x:Type local:ToyClass}"&gt;
+                    &lt;StackPanel Orientation="Horizontal"&gt;
+                        &lt;TextBlock Text="{Binding Name}"/&gt;
+                        &lt;TextBlock Text=" : "/&gt;
+                        &lt;TextBlock Text="{Binding State}"/&gt;
+                    &lt;/StackPanel&gt;
+                &lt;/DataTemplate&gt;
+            &lt;/TreeView.Resources&gt;
+            &lt;TreeView.ItemContainerStyle&gt;
+                &lt;Style TargetType="{x:Type TreeViewItem}"&gt;
+                    &lt;Setter Property="IsSelected"
+                    Value="{Binding IsSelected, Mode=TwoWay}"/&gt;
+                &lt;/Style&gt;
+            &lt;/TreeView.ItemContainerStyle&gt;
+        &lt;/TreeView&gt;
+        &lt;StackPanel&gt;
+            &lt;Button Content="ShowSelectedItemsCommand"
+                   Command="{Binding ShowSelectedItemsCommand}"/&gt;
+            &lt;TextBlock Text="{Binding SelectedItemName}"/&gt;
+        &lt;/StackPanel&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ViewModel()
+        {
+            ShowSelectedItemsCommand = new DelegateCommand(() =&gt;
+            {
+                var selectedItem = GetSelectedItem();
+                switch (selectedItem)
+                {
+                    case null: SelectedItemName = "No item selected"; break;
+                    case DogClass dog: SelectedItemName = dog.Name; break;
+                    case ToyClass toy: SelectedItemName = toy.Name; break;
+                }
+            });
+        }
+        public object? GetSelectedItem()
+        {
+            foreach (var dog in DogList)
+            {
+                object? result = dog.IsSelected ? dog : dog.GetSelectedToy();
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+            return null;
+        }
+
+        public ObservableCollection&lt;DogClass&gt; DogList { get; set; } = new()
+        {
+            new DogClass("芝", "ぽち", 3,
+                new List&lt;ToyClass&gt;()
+                {
+                    new ToyClass("ボール", "歯形あり")
+                }),
+            new DogClass("シェルティー", "ラッキー", 12,
+                new List&lt;ToyClass&gt;()
+                {
+                    new ToyClass("骨のおもちゃ", "新品")
+                }),
+            new DogClass("ゴールデンリトリーバー", "でんすけ", 5,
+                new List&lt;ToyClass&gt;() {
+                    new ToyClass("落ち葉", "行方不明"),
+                    new ToyClass("フリスビー", "半壊")
+                })
+        };
+
+        public DelegateCommand ShowSelectedItemsCommand { get; }
+
+        private string _selectedItemName = string.Empty;
+        public string SelectedItemName { get =&gt; _selectedItemName; set =&gt; SetProperty(ref _selectedItemName, value); }
+    }
+
+    public class DogClass
+    {
+        public DogClass(string _dogBreed, string _name, int _age, List&lt;ToyClass&gt; _toyList)
+        {
+            DogBreed = _dogBreed;
+            Name = _name;
+            Age = _age;
+            ToyList = _toyList;
+        }
+
+        public string DogBreed { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public List&lt;ToyClass&gt; ToyList { get; set; }
+
+        public bool IsSelected { get; set; }
+
+        public ToyClass? GetSelectedToy() =&gt; ToyList.Find(item =&gt; item.IsSelected);
+    }
+
+    public class ToyClass
+    {
+        public ToyClass(string _name, string _state)
+        {
+            Name = _name;
+            State = _state;
+        }
+
+        public string Name { get; set; }
+        public string State { get; set; }
+
+        public bool IsSelected { get; set; }
+    }
+}</code></pre>
+</div>
+<h2 id="combobox">6.4　ComboBox</h2>
+<h3 id="xamlだけで実装-1">6.4.1　Xamlだけで実装</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel Margin="20"&gt;
+        &lt;TextBlock Text="{Binding SelectedDog}"/&gt;
+        &lt;ComboBox SelectedItem="{Binding SelectedDog}"&gt;
+            &lt;system:String&gt;ぽち&lt;/system:String&gt;
+            &lt;system:String&gt;ラッキー&lt;/system:String&gt;
+            &lt;system:String&gt;でんすけ&lt;/system:String&gt;
+        &lt;/ComboBox&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        private string? _selectedDog = null;
+        public string? SelectedDog { get => _selectedDog; set => SetProperty(ref _selectedDog, value); }
+
+    }
+}
+</code></pre>
+</div>
+<h3 id="ビューモデルを使う">6.4.2　ビューモデルを使う</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel&gt;
+        &lt;TextBlock Text="{Binding SelectedDog}"/&gt;
+        &lt;ComboBox ItemsSource="{Binding DogList}"
+                  SelectedItem="{Binding SelectedDog}"
+                  Margin="20"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Mvvm;
+using System.Collections.ObjectModel;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ObservableCollection&lt;string&gt; DogList { get; set; } = new()
+        {
+            "ポチ", "ラッキー", "でんすけ"
+        };
+
+        private string? _selectedDog = null;
+        public string? SelectedDog { get => _selectedDog; set => SetProperty(ref _selectedDog, value); }
+     }
+}
+</code></pre>
+</div>
+<h3 id="dogclassを使う">6.4.3　DogClassを使う</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel Margin="20"&gt;
+        &lt;TextBlock Text="{Binding SelectedDog.Name}"/&gt;
+        &lt;ComboBox VerticalAlignment="Top"
+                  ItemsSource="{Binding DogList}"
+                  DisplayMemberPath="Name"
+                  SelectedItem="{Binding SelectedDog}"&gt;
+        &lt;/ComboBox&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h6 id="DogClassを使うビューモデル"></h6>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Mvvm;
+using System.Collections.ObjectModel;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ObservableCollection&lt;DogClass&gt; DogList { get; set; } = new()
+        {
+            new DogClass("芝", "ぽち", 3),
+            new DogClass("シェルティー", "ラッキー", 12),
+            new DogClass("ゴールデンリトリーバー", "でんすけ", 5)
+        };
+
+        private DogClass? _selectedDog = null;
+        public DogClass? SelectedDog { get =&gt; _selectedDog; set =&gt; SetProperty(ref _selectedDog, value); }
+    }
+
+    public class DogClass
+    {
+        public DogClass(string _dogBreed, string _name, int _age)
+        {
+            DogBreed = _dogBreed;
+            Name = _name;
+            Age = _age;
+        }
+
+        public string DogBreed { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+    }
+}</code></pre>
+</div>
+<h3
+id="複数の情報を選択肢に表示する">6.4.4　複数の情報を選択肢に表示する</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;StackPanel Margin="20"&gt;
+        &lt;TextBlock Text="{Binding SelectedDog.Name}"/&gt;
+        &lt;ComboBox VerticalAlignment="Top"
+              ItemsSource="{Binding DogList}"
+              SelectedItem="{Binding SelectedDog}"&gt;
+            &lt;ComboBox.ItemTemplate&gt;
+                &lt;DataTemplate&gt;
+                    &lt;StackPanel Orientation="Horizontal"&gt;
+                        &lt;TextBlock Text="{Binding Name}"/&gt;
+                        &lt;TextBlock Text=" : "/&gt;
+                        &lt;TextBlock Text="{Binding Age}"/&gt;
+                    &lt;/StackPanel&gt;
+                &lt;/DataTemplate&gt;
+            &lt;/ComboBox.ItemTemplate&gt;
+        &lt;/ComboBox&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<h1 id="ウィンドウの要素">7章 ウィンドウの要素</h1>
+<h2 id="menu">7.1　Menu</h2>
+<h3 id="基本的なメニュー">7.1.1　基本的なメニュー</h3>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;DockPanel LastChildFill="False"
+               Margin="20"&gt;
+        &lt;Menu DockPanel.Dock="Top"&gt;
+            &lt;MenuItem Header="_File"&gt;
+                &lt;MenuItem Header="_Open" Name="OpenMenuItem"
+                          Command="{Binding OpenFileCommand}"/&gt;
+                &lt;Separator/&gt;
+                &lt;MenuItem Header="_Close"
+                          Command="{Binding CloseFileCommand}"/&gt;
+            &lt;/MenuItem&gt;
+            &lt;MenuItem Header="_Edit"
+                      Command="{Binding EditCommand}"/&gt;
+            &lt;MenuItem Header="_Options"&gt;
+                &lt;MenuItem Header="_Auto Save"
+                          IsCheckable="True"
+                          IsChecked="{Binding AutoSaveEnabled}"/&gt;
+                &lt;MenuItem Header="Auto Format"
+                          IsCheckable="True"
+                          Command="{Binding AutoFormatCommand}"
+                          CommandParameter="{Binding IsChecked,
+                                                     RelativeSource={RelativeSource Self}}"
+                          /&gt;
+            &lt;/MenuItem&gt;
+        &lt;/Menu&gt;
+        &lt;TextBlock Text="{Binding SelectedMenuItem}"/&gt;
+    &lt;/DockPanel&gt;
+&lt;/Window&gt;</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ViewModel()
+        {
+            OpenFileCommand= new DelegateCommand(() => SelectedMenuItem = "Open File");
+            CloseFileCommand = new DelegateCommand(() => SelectedMenuItem= "Close File");
+            EditCommand = new DelegateCommand(() => SelectedMenuItem = "Edit");
+            AutoFormatCommand = new DelegateCommand&lt;bool?&gt;((p) => SelectedMenuItem = "Auto format: " + p?.ToString());
+        }
+
+        private string _sSelectedMenuItem = string.Empty;
+        public string SelectedMenuItem { get => _sSelectedMenuItem; set => SetProperty(ref _sSelectedMenuItem, value); }
+
+        #region コマンドオブジェクト
+        public DelegateCommand OpenFileCommand { get; }
+        public DelegateCommand CloseFileCommand { get; }
+        public DelegateCommand EditCommand { get; }
+        public DelegateCommand&lt;bool?&gt; AutoFormatCommand { get; }
+        #endregion
+
+        #region AutoSave制御
+        private bool _autoSaveEnabled = true;
+        public bool AutoSaveEnabled
+        {
+            get => _autoSaveEnabled;
+            set
+            {
+                if(SetProperty(ref _autoSaveEnabled, value))
+                {
+                    SelectedMenuItem = "AutoSave: " + AutoSaveEnabled.ToString();
+                }
+            }
+        }
+        #endregion
+
+        #region AutoFormat制御
+        private bool _autoFormatEnabled = true;
+        public bool AutoFormatEnabled { get => _autoFormatEnabled; set => SetProperty(ref _autoFormatEnabled, value); }
+        #endregion
+    }
+}
+</code></pre>
+</div>
+<h3 id="実践的なメニュー">7.1.2　実践的なメニュー</h3>
+<p>　前項のメニューでも十分に使えますが、製品プログラムのメニューでは、ショートカットキーでコマンドを実行したり、一部のアイテムを無効化したり非表示にしたりします。これらを組み込んでみましょう。</p>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;Window.Resources&gt;
+        &lt;BooleanToVisibilityConverter x:Key="CollapseForFalse"/&gt;
+    &lt;/Window.Resources&gt;
+    
+    <u>&lt;Window.InputBindings&gt;</u>
+        <u>&lt;KeyBinding Gesture="Ctrl+O" Command="{Binding OpenFileCommand}"/&gt;</u>
+        <u>&lt;KeyBinding Gesture="Ctrl+C" Command="{Binding CloseFileCommand}"/&gt;</u>
+    <u>&lt;/Window.InputBindings&gt;</u>
+
+    &lt;DockPanel LastChildFill="False"&gt;
+        &lt;Menu DockPanel.Dock="Top"&gt;
+            &lt;MenuItem Header="_File"
+                      Command="{Binding FileCommand}"&gt;
+                &lt;MenuItem Header="_Open" Name="OpenMenuItem"
+                          Command="{Binding OpenFileCommand}"
+                          <u>InputGestureText="Ctrl+O"</u> /&gt;
+                &lt;Separator/&gt;
+                &lt;MenuItem Header="_Close"
+                          Command="{Binding CloseFileCommand}"
+                          <u>InputGestureText="Ctrl+C"</u>/&gt;
+            &lt;/MenuItem&gt;
+            &lt;MenuItem Header="_Edit"
+                      Command="{Binding EditCommand}"/&gt;
+            &lt;MenuItem Header="_Options"&gt;
+                &lt;MenuItem Header="_Auto Save"
+                          IsCheckable="True"
+                          IsChecked="{Binding AutoSaveEnabled}"
+                          IsEnabled="{Binding CanEnableAutoSave}"/&gt;
+                &lt;MenuItem Header="Auto Format"
+                          IsCheckable="True"
+                          IsChecked="{Binding AutoFormatEnabled}"
+                          Command="{Binding AutoFormatCommand}"
+                          CommandParameter="{Binding IsChecked,
+                                                     RelativeSource={RelativeSource Self}}"
+                          Visibility="{Binding CanEnableAutoFormat,
+                                               Converter={StaticResource CollapseForFalse}}"
+                          /&gt;
+            &lt;/MenuItem&gt;
+        &lt;/Menu&gt;
+        &lt;CheckBox Content="Enable auto save"
+                  DockPanel.Dock="Top"
+                  IsChecked="{Binding CanEnableAutoSave}"/&gt;
+        &lt;CheckBox Content="Enable auto format"
+                  DockPanel.Dock="Top"
+                  IsChecked="{Binding CanEnableAutoFormat}"/&gt;
+        &lt;TextBlock Text="{Binding SelectedMenuItem}"/&gt;
+    &lt;/DockPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+using System.Diagnostics;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public ViewModel()
+        {
+            OpenFileCommand= new DelegateCommand(() => SelectedMenuItem = "Open File");
+            CloseFileCommand = new DelegateCommand(() => SelectedMenuItem= "Close File");
+            EditCommand = new DelegateCommand(() => SelectedMenuItem = "Edit");
+            AutoFormatCommand = new DelegateCommand&lt;bool?&gt;((p) => SelectedMenuItem = "Auto format: " + p?.ToString());
+        }
+
+        private string _sSelectedMenuItem = string.Empty;
+        public string SelectedMenuItem { get => _sSelectedMenuItem; set => SetProperty(ref _sSelectedMenuItem, value); }
+
+        #region コマンドオブジェクト
+        public DelegateCommand OpenFileCommand { get; }
+        public DelegateCommand CloseFileCommand { get; }
+        public DelegateCommand EditCommand { get; }
+        #endregion
+
+        #region AutoSave制御
+        private bool _autoSaveEnabled = true;
+        public bool AutoSaveEnabled
+        {
+            get =&gt; _autoSaveEnabled;
+            set
+            {
+                if (SetProperty(ref _autoSaveEnabled, value))
+                {
+                    SelectedMenuItem = "AutoSave: " + AutoSaveEnabled.ToString();
+                }
+            }
+        }
+
+        private bool _canEnableAutoSave = true;
+        public bool CanEnableAutoSave { get =&gt; _canEnableAutoSave; set =&gt; SetProperty(ref _canEnableAutoSave, value); }
+        #endregion
+
+        #region AutoFormat制御
+        public DelegateCommand&lt;bool?&gt; AutoFormatCommand { get; }
+        
+        private bool _autoFormatEnabled = true;
+        public bool AutoFormatEnabled { get =&gt; _autoFormatEnabled; set =&gt; SetProperty(ref _autoFormatEnabled, value); }
+
+        private bool _canEnableAutoFormat = true;
+        public bool CanEnableAutoFormat { get =&gt; _canEnableAutoFormat; set =&gt; SetProperty(ref _canEnableAutoFormat, value); }
+        #endregion
+    }
+}
+</code></pre>
+</div>
+<h2 id="toolbar">7.2　ToolBar</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;DockPanel LastChildFill="False"&gt;
+        &lt;ToolBarTray DockPanel.Dock="Top"&gt;
+            &lt;ToolBar&gt;
+                &lt;Button Command="{Binding OpenFileCommand}"&gt;
+                    &lt;Image Source="OpenFileIcon.png"/&gt;
+                &lt;/Button&gt;
+                &lt;Button Command="{Binding CloseFileCommand}"&gt;
+                    &lt;Image Source="CloseFileIcon.png"/&gt;
+                &lt;/Button&gt;
+            &lt;/ToolBar&gt;
+        &lt;/ToolBarTray&gt;
+        &lt;TextBlock Text="{Binding ToolCommand}"/&gt;
+    &lt;/DockPanel&gt;
+&lt;/Window&gt;</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Commands;
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        ViewModel()
+        {
+            OpenFileCommand = new DelegateCommand(() => ToolCommand = "Open File");
+            CloseFileCommand= new DelegateCommand(() => ToolCommand = "Close File"); 
+        }
+        private string _toolCommand = string.Empty;
+        public string ToolCommand { get => _toolCommand; set => SetProperty(ref _toolCommand, value); }
+
+        #region コマンドオブジェクト
+        public DelegateCommand OpenFileCommand { get; } 
+        public DelegateCommand CloseFileCommand { get; }
+        #endregion
+    }
+}
+</code></pre>
+</div>
+<h2 id="statusbar">7.3　StatusBar</h2>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>MainWindow.xaml</h5>
+&lt;Window x:Class="SampleCode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleCode"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="250" Width="250"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:ViewModel/&gt;
+    &lt;/Window.DataContext&gt;
+
+    &lt;DockPanel LastChildFill="False"&gt;
+        &lt;StatusBar DockPanel.Dock="Bottom"
+                   Background="LightGray"&gt;
+            &lt;ProgressBar Width="50" Height="16" 
+                         Value="{Binding ProgressPercentage}"
+                         Name="ProgressIndicator"/&gt;
+            &lt;Separator/&gt;
+            &lt;TextBlock Text="{Binding Value,
+                                      ElementName=ProgressIndicator,
+                                      StringFormat={}{0} %}"/&gt;
+        &lt;/StatusBar&gt;
+    &lt;/DockPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+</div>
+<div class="coloredBox">
+<pre class="sourceCode"><code class="sourceCode"><h5>ViewModel.cs</h5>
+using Prism.Mvvm;
+
+namespace SampleCode
+{
+    internal class ViewModel : BindableBase
+    {
+        public double ProgressPercentage { get; set; } = 63;
+    }
+}
+</code></pre>
+</div>
+<h1 id="xaml用語集">8章 Xaml用語集</h1>
+<p>　本章では、よく使われるXamlの用語について説明します。</p>
+<p><img src="Images\Glossary.png" /></p>
+<h4 id="要素">要素</h4>
+<p>　要素名は、C#のクラス名です。Xaml中に要素を書くと、WPFは、そのクラスのオブジェクトを作ります。</p>
+<p>　要素により作られるオブジェクトは、画面に表示されるコントロール、整数や文字列、表示する際に利用されるデータなど様々です。</p>
+<h4 id="子要素">子要素</h4>
+<p>　子要素は、要素の子として配置された要素のことです。WPFは、子要素に対しても、要素名と同じ名前のクラスのオブジェクトを作ります。</p>
+<p>　子要素のオブジェクトは、親要素のいずれかのプロパティに設定されます。そのプロパティは、親要素の種類毎に決まっており、上図の例では、Grid要素ではChildrenプロパティに、Button要素ではContentプロパティに設定されます。</p>
+<p>　なお、後述するプロパティ要素は、子要素ではありません。</p>
+<h4 id="親要素">親要素</h4>
+<p>　子要素を含む要素です。</p>
+<h4 id="属性">属性</h4>
+<p>　属性は、要素によって作られたオブジェクトが公開しているプロパティです。</p>
+<h4 id="属性値">属性値</h4>
+<p>　属性値は、プロパティに代入する値です。常に文字列で書かれますが、プロパティに代入するときに適切な型に自動的に変換されます。自動的に変換できない場合にはビルドエラーを起こします。</p>
+<p>　属性値は、単純な文字列で書ける程度の値しかプロパティに代入できません。複雑な値をプロパティに代入するには、プロパティ要素を使う必要があります。</p>
+<h4 id="プロパティ要素">プロパティ要素</h4>
+<p>　プロパティ要素は、属性と同じく、要素によって作られたオブジェクトが公開しているプロパティです。単純な文字列で書けないほど複雑な値をプロパティに設定するために使われます。値の複雑さによって、その値を属性に書くかプロパティ要素に書くかを決めてください。</p>
+<p>　なお、プロパティ要素は、コンテントではありません。</p>
+<h4 id="依存関係プロパティ">依存関係プロパティ</h4>
+<p>　依存関係プロパティは、クラスのプロパティの一種ですが、普通の値に加えてバインディングやリソースを代入できます。</p>
+<p>　Xamlからは、普通のプロパティと同じように属性やプロパティ要素により設定できます。C#からは、普通のプロパティと同じように読み書きできます。</p>
+<p>　プロパティが依存関係プロパティの場合、マイクロソフトのドキュメントには、プロパティの説明文の最後に「依存プロパティ情報」（英語版では「Dependency
+Property Information」）が記載されています。</p>
+<h4 id="sec:コンテント">コンテント</h4>
+<p>　要素のコンテントとして書かれる文字列や要素です。上図では、Grid要素内のTextBlock要素とButton要素、そして、Button要素内の文字列「Change
+message」がコンテントです。</p>
+<p>　コンテントは、親要素のプロパティに代入されます。コンテントを格納するプロパティを、コンテントプロパティと呼びます。どのプロパティがコンテントプロパティかは、親要素の種類により異なります。例えば、Grid要素ではChildrenプロパティが、Button要素ではContentプロパティがコンテントプロパティです。</p>
+<h4 id="添付プロパティ">添付プロパティ</h4>
+<p>　添付プロパティは、それが置かれている要素の属性ではありません。他の要素が用意した粘着メモのようなものです。</p>
+<p>　この粘着メモには、それを用意した要素のためのメモが書かれます。図の例では、Grid要素が用意した行番号用粘着メモに「1」と書いて、「Button要素をGridの2行目に配置してほしい」と伝えています。</p>
+<h4 id="マークアップ拡張">マークアップ拡張</h4>
+<p>　マークアップ拡張は、普通に書くと複雑で読みにくくなる値を読みやすく書けるように工夫された書き方です。</p>
+<p>　<code>{Binding ...}</code>は、依存関係プロパティとして作られた属性を、任意の要素の属性や、DataContextに代入されているオブジェクトのプロパティに関連付けます。</p>
+<p>　<code>{x:Type className}</code>は、C#で<code>Type.GetType("className")</code>と書いたのと同じ意味です。属性にはType型オブジェクトが代入されます。</p>
+<h6 id="Glossary_StaticResource"></h6>
+<p>　<code>{StaticResource keyName}</code>は、リソースディクショナリに登録されているkeyNameというキーを持つエントリーの値を参照します。リソースディクショナリの値が入れ替えられても、それを検出せず、古い値、つまり、それまで参照していたオブジェクトを参照し続けます。</p>
+<p>　<code>{DynamicResource keyName}</code>は、リソースディクショナリに登録されているkeyNameというキーを持つエントリーの値を参照します。リソースディクショナリに登録されている値が入れ替えられると、それを検出して、新しい値を参照します。</p>
+<p>　<code>{x:Null}</code>は、C#のnullです。</p>
+</body>
+</html>
